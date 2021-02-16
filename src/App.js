@@ -1,24 +1,51 @@
-import logo from './logo.svg';
 import './App.css';
+import * as Pages from './Page'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+
+
+const labs = Object.entries(Pages);
+// console.log(labs);
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router >
+      <div className="App">
+        <Switch>
+          {labs.map(([k, v]) => {
+            if (v.default) {
+              const Tmp = v.default
+              return (
+                <Route
+                  key={k}
+                  path={`/${k}`}
+                >
+                  <Tmp />
+                </Route>
+              )
+            }
+          })}
+          <Route
+            exact
+            path={`/`}
+          >
+            <h1>LAB</h1>
+            {labs.map(([k, v]) => {
+              if (v.default) {
+                return (
+                  <div key={k}>
+                    <Link to={`/${k}`}>
+                      {k}
+                    </Link>
+                  </div>
+                )
+              }
+            })}
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
