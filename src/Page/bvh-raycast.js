@@ -87,6 +87,7 @@ export default function Main() {
         obj.add(cylinderMesh);
         obj.add(origMesh);
         obj.add(hitMesh);
+        // obj.position.copy(camera.position)
         scene.add(obj);
 
         // set transforms
@@ -120,6 +121,7 @@ export default function Main() {
 
         // origMesh.position.copy(camera)
         // origMesh.position.z += 50
+        // obj.position.copy(camera.position)
         origMesh.updateMatrixWorld();
         origVec.setFromMatrixPosition(origMesh.matrixWorld);
         dirVec.copy(origVec).multiplyScalar(- 1).normalize();
@@ -153,13 +155,13 @@ export default function Main() {
         // calculate mouse position in normalized device coordinates
         // (-1 to +1) for both components
 
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+        mouse.y = - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
 
         // dirVec.copy(new THREE.Vector3(mouse.x, mouse.y, 0))
-        origVec.x = (event.clientX / window.innerWidth) * 2 - 1;
-        origVec.y = - (event.clientY / window.innerHeight) * 2 + 1;
-        console.log(origVec)
+        // origVec.x = (event.clientX / window.innerWidth) * 2 - 1;
+        // origVec.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        // console.log(origVec)
         // UpdateRaycast();
     }
 
