@@ -2,8 +2,14 @@ import * as THREE from "three";
 import React, { useEffect, useRef } from "react";
 
 import CameraControls from "camera-controls";
+import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from 'three-mesh-bvh';
 
 CameraControls.install({ THREE: THREE });
+
+THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
+THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
+THREE.Mesh.prototype.raycast = acceleratedRaycast;
+
 
 let cube, scene, camera, renderer, cameraControls, helper;
 const clock = new THREE.Clock();
@@ -25,7 +31,7 @@ const yDir = (Math.random() - 0.5);
 // const origMesh = new THREE.Mesh(sphere, material);
 //         const hitMesh = new THREE.Mesh(sphere, material);
 
-let origMesh, hitMesh, cylinderMesh;
+let origMesh, hitMesh, cylinderMesh, obj;
 
 
 
@@ -52,8 +58,10 @@ export default function Main() {
         containerRef.current.appendChild(renderer.domElement);
 
         var geometry = new THREE.BoxGeometry(10, 10, 10);
+        geometry.computeBoundsTree();
         var material = new THREE.MeshNormalMaterial();
         cube = new THREE.Mesh(geometry, material);
+        
         scene.add(cube);
         camera.position.z = 200;
 
@@ -67,7 +75,7 @@ export default function Main() {
 
 
         // Objects
-        const obj = new THREE.Object3D();
+        obj = new THREE.Object3D();
         material = new THREE.MeshBasicMaterial({ color: 0xffffff });
         origMesh = new THREE.Mesh(sphere, material);
         hitMesh = new THREE.Mesh(sphere, material);
@@ -97,21 +105,33 @@ export default function Main() {
         requestAnimationFrame(Animate);
         // cube.rotation.x += 0.01;
         // cube.rotation.y += 0.01;
-        cube.updateMatrixWorld();
+        // cube.updateMatrixWorld();
 
         const delta = clock.getDelta();
         // const hasControlsUpdated = cameraControls.update(delta);
+
+        obj.rotation.x += 0.5  * 1 * delta;
+        obj.rotation.z += 0.5  * 1 * delta;
+        // obj.rotation.z += 0.01;
+        // obj.rotation.y += 0.01;
+        // origMesh.rotation.z += 0.5 * 0.0001 * 1 * delta;
+
         cameraControls.update(delta);
 
+        // origMesh.position.copy(camera)
+        // origMesh.position.z += 50
         origMesh.updateMatrixWorld();
         origVec.setFromMatrixPosition(origMesh.matrixWorld);
         dirVec.copy(origVec).multiplyScalar(- 1).normalize();
+        // console.log(dirVec)
+        // dirVec.x = mouse.x
+        // dirVec.y = mouse.y
 
         // raycaster.set(origVec, dirVec);
         raycaster.set(origVec, dirVec);
         // raycaster.setFromCamera(mouse, camera);
         raycaster.firstHitOnly = true;
-        const res = raycaster.intersectObject(cube, true);
+        const res = raycaster.intersectObject(cube);
         const length = res.length ? res[0].distance : pointDist;
 
         hitMesh.position.set(pointDist - length, 0, 0);
@@ -136,7 +156,10 @@ export default function Main() {
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
-
+        // dirVec.copy(new THREE.Vector3(mouse.x, mouse.y, 0))
+        origVec.x = (event.clientX / window.innerWidth) * 2 - 1;
+        origVec.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        console.log(origVec)
         // UpdateRaycast();
     }
 
