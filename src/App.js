@@ -1,4 +1,4 @@
-import './App.css';
+import './App.css';  
 import * as Pages from './Page'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -11,7 +11,7 @@ function App() {
 
   return (
     <Router >
-      <div className="App">
+      <div style={{height:"100vh"}} className="App">
         <Switch>
           {labs.map(([k, v]) => {
             if (v.default) {
