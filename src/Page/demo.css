@@ -18,7 +18,7 @@ menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
-	vertical-align: baseline;
+	vertical-align: text-top;
 }
 
 html, body, div, span, applet, object, iframe,
