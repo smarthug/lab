@@ -2,17 +2,23 @@ import React, { useState, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CodeMirror from "codemirror"
 import './mirrormark.package.css'
-import './demo.css'
+// import './demo.css'
+
+
 
 
 
 const useStyles = makeStyles(theme => ({
-    
+
 }));
 
-export default function Main({  }) {
-    
+export default function Main({ }) {
+
     const classes = useStyles();
+
+
+
+
 
 
 
@@ -75,96 +81,104 @@ export default function Main({  }) {
 
         window.CodeMirror = CodeMirror
 
-        CodeMirror.defineOption("preview", false, function (cm, val, old) {
-            console.log("preview")
-            // 그냥 set state 로 할까 .... 
-            console.log(cm);
-            console.log(val)
-            console.log(old);
-        });
+        // CodeMirror.defineOption("preview", false, function (cm, val, old) {
+        //     console.log("preview")
+        //     // 그냥 set state 로 할까 .... 
+        //     console.log(cm);
+        //     console.log(val)
+        //     console.log(old);
+        // });
 
         // console.log(CodeMirror);
         // // import("MirrorMark/src/js/mirrormark").then(v=>console.log(window.mirrorMark))
-        import("MirrorMark/src/js/mirrormark").then(v => {
-            console.log(v)
+        // import("MirrorMark/src/js/mirrormark").then(v => {
+        //     console.log(v)
 
-            let textarea1 = window.mirrorMark(document.getElementById("textarea1"), { showToolbar: true });
-            textarea1.render();
-
-
+        //     let textarea1 = window.mirrorMark(document.getElementById("textarea1"), { showToolbar: true });
+        //     textarea1.render();
 
 
-            let div = document.createElement("div")
-            div.textContent = "format_italic"
-            div.classList.add("material-icons");
-            document.querySelector(".italicize").childNodes[0].appendChild(div);
 
 
-            div = document.createElement("div")
-            div.textContent = "format_bold"
-            div.classList.add("material-icons")
-            document.querySelector(".bold").childNodes[0].appendChild(div);
+        //     let div = document.createElement("div")
+        //     div.textContent = "format_italic"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".italicize").childNodes[0].appendChild(div);
 
-            div = document.createElement("div")
-            div.textContent = "format_quote"
-            div.classList.add("material-icons");
-            document.querySelector(".blockquote").childNodes[0].appendChild(div);
 
-            div = document.createElement("div")
-            div.textContent = "strikethrough_s"
-            div.classList.add("material-icons");
-            document.querySelector(".strikethrough").childNodes[0].appendChild(div);
+        //     div = document.createElement("div")
+        //     div.textContent = "format_bold"
+        //     div.classList.add("material-icons")
+        //     document.querySelector(".bold").childNodes[0].appendChild(div);
 
-            div = document.createElement("div")
-            div.textContent = "link"
-            div.classList.add("material-icons");
-            document.querySelector(".link").childNodes[0].appendChild(div);
+        //     div = document.createElement("div")
+        //     div.textContent = "format_quote"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".blockquote").childNodes[0].appendChild(div);
 
-            div = document.createElement("div")
-            div.textContent = "image"
-            div.classList.add("material-icons");
-            document.querySelector(".image").childNodes[0].appendChild(div);
+        //     div = document.createElement("div")
+        //     div.textContent = "strikethrough_s"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".strikethrough").childNodes[0].appendChild(div);
 
-            div = document.createElement("div")
-            div.textContent = "format_list_bulleted"
-            div.classList.add("material-icons");
-            document.querySelector(".unorderedList").childNodes[0].appendChild(div);
+        //     div = document.createElement("div")
+        //     div.textContent = "link"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".link").childNodes[0].appendChild(div);
 
-            div = document.createElement("div")
-            div.textContent = "format_list_numbered"
-            div.classList.add("material-icons");
-            document.querySelector(".orderedList").childNodes[0].appendChild(div);
+        //     div = document.createElement("div")
+        //     div.textContent = "image"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".image").childNodes[0].appendChild(div);
 
-            div = document.createElement("div")
-            div.textContent = "open_in_full"
-            div.classList.add("material-icons");
-            document.querySelector(".fullScreen").childNodes[0].appendChild(div);
+        //     div = document.createElement("div")
+        //     div.textContent = "format_list_bulleted"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".unorderedList").childNodes[0].appendChild(div);
 
-            div = document.createElement("div")
-            div.textContent = "preview"
-            div.classList.add("material-icons");
-            document.querySelector(".preview").childNodes[0].appendChild(div);
+        //     div = document.createElement("div")
+        //     div.textContent = "format_list_numbered"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".orderedList").childNodes[0].appendChild(div);
 
-        })
-       
+        //     div = document.createElement("div")
+        //     div.textContent = "open_in_full"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".fullScreen").childNodes[0].appendChild(div);
+
+        //     div = document.createElement("div")
+        //     div.textContent = "preview"
+        //     div.classList.add("material-icons");
+        //     document.querySelector(".preview").childNodes[0].appendChild(div);
+
+        // })
+
 
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
+    function Render() {
+        console.log("Render");
+    }
+
     return (
-        <div className={"editor"} style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "white"
+        <div>
+            <button onClick={Render}>Render</button>
+            <div className={"editor"} style={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "white"
 
-        }}>
+            }}>
 
-            <textarea  id="textarea1">
+                <textarea id="textarea1">
 
-                # This is a main heading
-                ## This is a sub heading
-                ### This is a sub sub heading
+                    # This is a main heading
+                    ## This is a sub heading
+                    ### This is a sub sub heading
             </textarea>
+            </div>
         </div>
 
     );
