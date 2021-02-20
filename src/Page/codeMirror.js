@@ -1,64 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-// import MDRenderer from "../../../Extensions/Core/markdown/component";
-// import MDWrapper from '../../../Components/partial/markdown'
-// import IssueMD from './issueMd'
-
-import {
-    Button,
-    TextField,
-    TextareaAutosize,
-    CircularProgress,
-    Tabs,
-    Tab,
-} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
-// import { fetchWithoutHooks } from "../../../Utils/axios";
-// import { usersAPI } from "../../../Urls";
-import { useParams, useHistory } from "react-router-dom";
-
-// import FlexContainer from '../../../Components/Flex/container'
-// import FlexItem from '../../../Components/Flex/item'
-
-// import MirrorMark from 'MirrorMark'
-// import MirrorMark from './mirrormark.package'
-// import * as MirrorMark from "MirrorMark/dist/js/mirrormark.package.js"
 import CodeMirror from "codemirror"
-// import MirrorMark from './mirrormark'
-// console.log(Testest)
-
-// import 'MirrorMark/dist/css/mirrormark.css'
-// import './mirrormark.css'
 import './mirrormark.package.css'
-// import 'MirrorMark/dist/css/demo.css'
 import './demo.css'
 
 
 
 const useStyles = makeStyles(theme => ({
-    test: {
-        // margin: theme.spacing(4),
-        color: "red",
-
-        // "& div.test a:before": {
-        //     content: "zzzzzz"
-        // },
-        "& div": {
-            color: "blue",
-            // content:"thefuck"
-        },
-
-
-
-
-        [theme.breakpoints.down("sm")]: {
-            margin: theme.spacing(1),
-        },
-    },
+    
 }));
 
-export default function Main({ type, namespace_slug, name }) {
-    // const matches = useMediaQuery(theme => theme.breakpoints.down("sm"));
+export default function Main({  }) {
+    
     const classes = useStyles();
 
 
@@ -122,6 +75,14 @@ export default function Main({ type, namespace_slug, name }) {
 
         window.CodeMirror = CodeMirror
 
+        CodeMirror.defineOption("preview", false, function (cm, val, old) {
+            console.log("preview")
+            // 그냥 set state 로 할까 .... 
+            console.log(cm);
+            console.log(val)
+            console.log(old);
+        });
+
         // console.log(CodeMirror);
         // // import("MirrorMark/src/js/mirrormark").then(v=>console.log(window.mirrorMark))
         import("MirrorMark/src/js/mirrormark").then(v => {
@@ -184,16 +145,8 @@ export default function Main({ type, namespace_slug, name }) {
             div.classList.add("material-icons");
             document.querySelector(".preview").childNodes[0].appendChild(div);
 
-
-
-
-
         })
-        // window.mirrorMark
-
-
-        // let textarea1 = MirrorMark(document.getElementById("textarea1"), { showToolbar: true });
-        // textarea1.render();
+       
 
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -202,11 +155,11 @@ export default function Main({ type, namespace_slug, name }) {
         <div className={"editor"} style={{
             width: "100%",
             height: "100%",
-            backgroundColor:"white"
-            
+            backgroundColor: "white"
+
         }}>
 
-            <textarea style={{ width: "100%", margin: 0, }} id="textarea1">
+            <textarea  id="textarea1">
 
                 # This is a main heading
                 ## This is a sub heading
