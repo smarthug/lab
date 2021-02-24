@@ -47,8 +47,8 @@ export default function Main() {
         // cube.raycast 
         camera.position.z = 200;
 
-        const geometryHelper = new THREE.ConeGeometry(2, 10, 3);
-        geometryHelper.translate(0, 5, 0);
+        const geometryHelper = new THREE.ConeGeometry(0.1, 0.6, 3);
+        geometryHelper.translate(0, 0.3, 0);
         geometryHelper.rotateX(Math.PI / 2);
         helper = new THREE.Mesh(geometryHelper, new THREE.MeshNormalMaterial());
         scene.add(helper);
