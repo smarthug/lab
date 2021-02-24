@@ -111,8 +111,8 @@ export default function Main() {
         const delta = clock.getDelta();
         // const hasControlsUpdated = cameraControls.update(delta);
 
-        obj.rotation.x += 0.5  * 1 * delta;
-        obj.rotation.z += 0.5  * 1 * delta;
+        // obj.rotation.x += 0.5  * 1 * delta;
+        // obj.rotation.z += 0.5  * 1 * delta;
         // obj.rotation.z += 0.01;
         // obj.rotation.y += 0.01;
         // origMesh.rotation.z += 0.5 * 0.0001 * 1 * delta;
@@ -124,7 +124,10 @@ export default function Main() {
         // obj.position.copy(camera.position)
         origMesh.updateMatrixWorld();
         origVec.setFromMatrixPosition(origMesh.matrixWorld);
+        // console.log(origVec)
         dirVec.copy(origVec).multiplyScalar(- 1).normalize();
+        dirVec.z = 0.25
+        // console.log(dirVec)
         // console.log(dirVec)
         // dirVec.x = mouse.x
         // dirVec.y = mouse.y

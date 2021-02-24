@@ -53,6 +53,10 @@ export default function ProseMirrorEditor() {
         console.log(document.querySelector("#content").value)
         console.log(editorRef.current.state.doc)
         console.log(editorRef.current.state.doc.textContent)
+        console.log(editorRef.current)
+        // console.log(editorRef.current.doc.getValue());
+
+        // console.log(textarea1.cm.getValue());
 
         console.log(defaultMarkdownSerializer.serialize(editorRef.current.state.doc));
     }

@@ -20,7 +20,7 @@ export default function Main() {
     useEffect(() => {
         Init();
         Animate();
-        window.addEventListener('mousemove', onMouseMove, false);
+        window.addEventListener('mouseup', onMouseMove, false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -40,6 +40,11 @@ export default function Main() {
         var material = new THREE.MeshNormalMaterial();
         cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
+        console.log(cube);
+        // cube.raycast = () => {
+        //     console.log("I am honored")
+        // }
+        // cube.raycast 
         camera.position.z = 200;
 
         const geometryHelper = new THREE.ConeGeometry(2, 10, 3);
@@ -73,8 +78,10 @@ export default function Main() {
         // calculate mouse position in normalized device coordinates
         // (-1 to +1) for both components
     
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        mouse.x = (event.clientX / window.innerWidth) *2 -1 ;
+        mouse.y = -(event.clientY / window.innerHeight) *2 +1 ;
+
+        // console.log(mouse.x , mouse.y)
     
     
         // UpdateRaycast();

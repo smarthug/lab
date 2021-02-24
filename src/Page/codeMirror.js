@@ -6,7 +6,7 @@ import './mirrormark.package.css'
 
 
 
-
+let textarea1;
 
 const useStyles = makeStyles(theme => ({
 
@@ -81,77 +81,77 @@ export default function Main({ }) {
 
         window.CodeMirror = CodeMirror
 
-        // CodeMirror.defineOption("preview", false, function (cm, val, old) {
-        //     console.log("preview")
-        //     // 그냥 set state 로 할까 .... 
-        //     console.log(cm);
-        //     console.log(val)
-        //     console.log(old);
-        // });
+        CodeMirror.defineOption("preview", false, function (cm, val, old) {
+            console.log("preview")
+            // 그냥 set state 로 할까 .... 
+            console.log(cm);
+            console.log(val)
+            console.log(old);
+        });
 
-        // console.log(CodeMirror);
-        // // import("MirrorMark/src/js/mirrormark").then(v=>console.log(window.mirrorMark))
-        // import("MirrorMark/src/js/mirrormark").then(v => {
-        //     console.log(v)
+        console.log(CodeMirror);
+        // import("MirrorMark/src/js/mirrormark").then(v=>console.log(window.mirrorMark))
+        import("MirrorMark/src/js/mirrormark").then(v => {
+            console.log(v)
 
-        //     let textarea1 = window.mirrorMark(document.getElementById("textarea1"), { showToolbar: true });
-        //     textarea1.render();
-
-
+            textarea1 = window.mirrorMark(document.getElementById("textarea1"), { showToolbar: true });
+            textarea1.render();
 
 
-        //     let div = document.createElement("div")
-        //     div.textContent = "format_italic"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".italicize").childNodes[0].appendChild(div);
 
 
-        //     div = document.createElement("div")
-        //     div.textContent = "format_bold"
-        //     div.classList.add("material-icons")
-        //     document.querySelector(".bold").childNodes[0].appendChild(div);
+            let div = document.createElement("div")
+            div.textContent = "format_italic"
+            div.classList.add("material-icons");
+            document.querySelector(".italicize").childNodes[0].appendChild(div);
 
-        //     div = document.createElement("div")
-        //     div.textContent = "format_quote"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".blockquote").childNodes[0].appendChild(div);
 
-        //     div = document.createElement("div")
-        //     div.textContent = "strikethrough_s"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".strikethrough").childNodes[0].appendChild(div);
+            div = document.createElement("div")
+            div.textContent = "format_bold"
+            div.classList.add("material-icons")
+            document.querySelector(".bold").childNodes[0].appendChild(div);
 
-        //     div = document.createElement("div")
-        //     div.textContent = "link"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".link").childNodes[0].appendChild(div);
+            div = document.createElement("div")
+            div.textContent = "format_quote"
+            div.classList.add("material-icons");
+            document.querySelector(".blockquote").childNodes[0].appendChild(div);
 
-        //     div = document.createElement("div")
-        //     div.textContent = "image"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".image").childNodes[0].appendChild(div);
+            div = document.createElement("div")
+            div.textContent = "strikethrough_s"
+            div.classList.add("material-icons");
+            document.querySelector(".strikethrough").childNodes[0].appendChild(div);
 
-        //     div = document.createElement("div")
-        //     div.textContent = "format_list_bulleted"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".unorderedList").childNodes[0].appendChild(div);
+            div = document.createElement("div")
+            div.textContent = "link"
+            div.classList.add("material-icons");
+            document.querySelector(".link").childNodes[0].appendChild(div);
 
-        //     div = document.createElement("div")
-        //     div.textContent = "format_list_numbered"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".orderedList").childNodes[0].appendChild(div);
+            div = document.createElement("div")
+            div.textContent = "image"
+            div.classList.add("material-icons");
+            document.querySelector(".image").childNodes[0].appendChild(div);
 
-        //     div = document.createElement("div")
-        //     div.textContent = "open_in_full"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".fullScreen").childNodes[0].appendChild(div);
+            div = document.createElement("div")
+            div.textContent = "format_list_bulleted"
+            div.classList.add("material-icons");
+            document.querySelector(".unorderedList").childNodes[0].appendChild(div);
 
-        //     div = document.createElement("div")
-        //     div.textContent = "preview"
-        //     div.classList.add("material-icons");
-        //     document.querySelector(".preview").childNodes[0].appendChild(div);
+            div = document.createElement("div")
+            div.textContent = "format_list_numbered"
+            div.classList.add("material-icons");
+            document.querySelector(".orderedList").childNodes[0].appendChild(div);
 
-        // })
+            div = document.createElement("div")
+            div.textContent = "open_in_full"
+            div.classList.add("material-icons");
+            document.querySelector(".fullScreen").childNodes[0].appendChild(div);
+
+            div = document.createElement("div")
+            div.textContent = "preview"
+            div.classList.add("material-icons");
+            document.querySelector(".preview").childNodes[0].appendChild(div);
+
+        })
 
 
         //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -160,6 +160,12 @@ export default function Main({ }) {
 
     function Render() {
         console.log("Render");
+        console.log(document.querySelector("#textarea1").value)
+        console.log(textarea1)
+        // console.log(textarea1.cm.getTextArea())
+        // console.log(textarea1.cm.state.doc.textContent)
+        console.log(textarea1.cm.getValue());
+        // doc.textContent
     }
 
     return (
