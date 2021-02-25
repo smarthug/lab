@@ -31,7 +31,7 @@ function App() {
             exact
             path={`/`}
           >
-            <h1>LAB</h1>
+            <h1 style={{marginTop:0}}>LAB</h1>
             {labs.map(([k, v]) => {
               if (v.default) {
                 return (
