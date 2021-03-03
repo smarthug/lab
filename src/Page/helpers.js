@@ -5,14 +5,18 @@ import CameraControls from "camera-controls";
 
 CameraControls.install({ THREE: THREE });
 
-let cube, scene, camera, renderer, cameraControls, helper;
+let cube, scene, camera, renderer, cameraControls, helper, box;
 const clock = new THREE.Clock();
+
+const target = new THREE.Vector3();
 
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
 var onDownPosition = new THREE.Vector2();
 var onUpPosition = new THREE.Vector2();
+
+var boxes = [];
 
 export default function Main() {
   const containerRef = useRef();
@@ -40,7 +44,7 @@ export default function Main() {
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshNormalMaterial();
     cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // scene.add(cube);
     camera.position.z = 5;
 
     cameraControls = new CameraControls(camera, renderer.domElement);
@@ -60,27 +64,37 @@ export default function Main() {
     object.translateX(15)
     group.add(object)
     group.add(cube)
-   
+
     scene.add(group)
-    scene.add(object)
-    
+    // scene.add(object)
+
     console.log(scene)
     // console.log(object)
 
-   
 
-   
+
+
 
     const geometry2 = new THREE.TorusBufferGeometry(10, 3, 16, 100);
-    const material2 = new THREE.MeshBasicMaterial({ color: 0xffff00, transparent:true, opacity:0.0 });
+    const material2 = new THREE.MeshBasicMaterial({ color: 0xffff00, transparent: true, opacity: 0.1 });
     const torus2 = new THREE.Mesh(geometry2, material2);
     torus2.translateX(-20)
     scene.add(torus2);
 
-    const box = new THREE.BoxHelper(torus2, 0xffff00);
-    box.geometry.computeBoundingBox();
+    // box = new THREE.BoxHelper(torus2, 0xffff00);
+    // box.update();
+    // box.geometry.computeBoundingBox();
 
-    scene.add(box);
+    // scene.add(box);
+
+    box = new THREE.Box3().setFromObject(group);
+    boxes.push(box)
+    // scene.add(new THREE.BoxHelper(group, 0xffff00))
+
+
+    let box2 = new THREE.Box3().setFromObject(torus2);
+    boxes.push(box2)
+    // scene.add(new THREE.BoxHelper(torus2, 0xffff00))
   }
 
   function Animate() {
@@ -132,43 +146,112 @@ function onMouseUp(event) {
 }
 
 
+function ascSort( a, b ) {
+
+	return a.distance - b.distance;
+
+}
+
+
+
+function getIntersectBox() {
+  let intersects = [];
+
+  boxes.map((box,i) => {
+
+    let intersectedPoint = raycaster.ray.intersectBox(box, target);
+  
+    if (intersectedPoint) {
+  
+      // console.log(raycaster.ray.origin.distanceTo(intersectedPoint));
+      let distance = raycaster.ray.origin.distanceTo(intersectedPoint);
+      intersects.push({distance:distance, box:box })
+    }
+  })
+
+  intersects.sort(ascSort);
+
+  // return intersects[0];
+  return intersects;
+  
+}
+
 
 function handleClick() {
   console.log(onDownPosition.distanceTo(onUpPosition))
   if (onDownPosition.distanceTo(onUpPosition) === 0) {
 
 
+    // getIntersects(onUpPosition, scene.children);
+
+    // 걍 mesh store 에 box 만 추가할까 ? 레이어 처럼 ???
+    // { splice: {mesh:"", layer:0, aabb:box3} }
+
+    // {"splice":box3}
+    //object entries 를 사용한 ... 
+    // 이안에서 asc sort 적용 ... .
+
+    // if ( raycaster.ray.intersectsBox( box ) === true ) {
+
+
+    mouse.set((onUpPosition.x * 2) - 1, - (onUpPosition.y * 2) + 1);
+
+    raycaster.setFromCamera(mouse, camera);
+
+ 
+
+    let result = getIntersectBox();
+
+    console.log(result);
+
+    //box 에서 정보를 추출할수 있을까 ????
+    // parent ?? 
+    // distance 가 가까운 순서로 해야할것 ... 
+
+    //  } 
+
+    // asc 할 distance 를 구하는 three.js 내부로직 .... 
+    //  const distance = raycaster.ray.origin.distanceTo( _intersectionPointWorld );
+
+    //  if ( distance < raycaster.near || distance > raycaster.far ) return null;
+
+    //  return {
+    //    distance: distance,
+    //    point: _intersectionPointWorld.clone(),
+    //    object: object
+    //  };
+
+
     // var intersects = getIntersects( onUpPosition, objects );
-    var intersects = getIntersects(onUpPosition, scene.children);
-    console.log(intersects)
-    if (intersects.length > 0) {
+    // console.log(intersects)
+    // if (intersects.length > 0) {
 
-      var object = intersects[0].object;
+    //   var object = intersects[0].object;
 
-      if (object.userData.object !== undefined) {
+    //   if (object.userData.object !== undefined) {
 
-        // helper
+    //     // helper
 
-        // editor.select( object.userData.object );
+    //     // editor.select( object.userData.object );
 
-      } else {
+    //   } else {
 
-        // editor.select( object );
-        console.log("worked")
+    //     // editor.select( object );
+    //     console.log("worked")
 
-        // helper.position.set(0, 0, 0);
-        // console.log(intersects[0])
-        // helper.lookAt(intersects[0].face.normal);
+    //     // helper.position.set(0, 0, 0);
+    //     // console.log(intersects[0])
+    //     // helper.lookAt(intersects[0].face.normal);
 
-        // helper.position.copy(intersects[0].point);
+    //     // helper.position.copy(intersects[0].point);
 
-      }
+    //   }
 
-    } else {
+    // } else {
 
-      // editor.select( null );
+    //   // editor.select( null );
 
-    }
+    // }
 
     // render();
 
@@ -190,12 +273,12 @@ function handleClick() {
 
 
 
-function getIntersects(point, objects) {
+function getIntersects(point) {
 
   mouse.set((point.x * 2) - 1, - (point.y * 2) + 1);
 
   raycaster.setFromCamera(mouse, camera);
 
-  return raycaster.intersectObjects(objects);
+  // return raycaster.intersectObjects(objects);
 
 }
