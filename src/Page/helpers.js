@@ -266,19 +266,3 @@ function handleClick() {
 
 //     helper.position.copy(intersects[0].point);
 // }
-
-
-// object picking
-
-
-
-
-function getIntersects(point) {
-
-  mouse.set((point.x * 2) - 1, - (point.y * 2) + 1);
-
-  raycaster.setFromCamera(mouse, camera);
-
-  // return raycaster.intersectObjects(objects);
-
-}
