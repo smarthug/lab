@@ -48,6 +48,12 @@ export default function Main() {
         room.geometry.translate(0, -0.01, 0); // fix z-fighting
         scene.add(room);
 
+        scene.add(new THREE.HemisphereLight(0x606060, 0x404040));
+
+        const light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(1, 1, 1).normalize();
+        scene.add(light);
+
         // mone
 
         var geometry = new THREE.PlaneBufferGeometry(0.2, 0.09);
