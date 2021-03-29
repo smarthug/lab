@@ -2,9 +2,11 @@ import * as THREE from "three";
 import React, { useEffect, useRef } from "react";
 
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.js';
 
 var camera, scene, renderer;
 var controller1, controller2;
+let controllerGrip1, controllerGrip2;
 
 var room;
 
@@ -106,12 +108,12 @@ export default function Main() {
 
         }
 
-        controller1 = renderer.vr.getController(0);
+        controller1 = renderer.xr.getController(0);
         controller1.addEventListener('selectstart', onSelectStart);
         controller1.addEventListener('selectend', onSelectEnd);
         scene.add(controller1);
 
-        controller2 = renderer.vr.getController(1);
+        controller2 = renderer.xr.getController(1);
         controller2.addEventListener('selectstart', onSelectStart);
         controller2.addEventListener('selectend', onSelectEnd);
         scene.add(controller2);
@@ -131,26 +133,36 @@ export default function Main() {
 
         // cannons
         // controller 
-        var geometry = new THREE.CylinderBufferGeometry(0.1, 0.1, 0.1, 6);
-        var texture = new THREE.TextureLoader().load('https://cdn.glitch.com/cf086db5-7af7-4f20-8220-93d1d99150b7%2Fdroplet_01.png?1558588643969');
-        var material = new THREE.MeshMatcapMaterial({ matcap: texture, flatShading: true });
+        // var geometry = new THREE.CylinderBufferGeometry(0.1, 0.1, 0.1, 6);
+        // var texture = new THREE.TextureLoader().load('https://cdn.glitch.com/cf086db5-7af7-4f20-8220-93d1d99150b7%2Fdroplet_01.png?1558588643969');
+        // var material = new THREE.MeshMatcapMaterial({ matcap: texture, flatShading: true });
 
-        var group = new THREE.Group();
+        // var group = new THREE.Group();
 
-        var mesh = new THREE.Mesh(geometry, material.clone());
-        mesh.position.set(0, 0.02, - 0.06);
-        mesh.rotation.set(Math.PI / 2, 0, 0);
-        mesh.scale.set(0.9, 2.5, 0.6);
-        group.add(mesh);
+        // var mesh = new THREE.Mesh(geometry, material.clone());
+        // mesh.position.set(0, 0.02, - 0.06);
+        // mesh.rotation.set(Math.PI / 2, 0, 0);
+        // mesh.scale.set(0.9, 2.5, 0.6);
+        // group.add(mesh);
 
-        var mesh = new THREE.Mesh(geometry, material.clone());
-        mesh.position.set(0, - 0.05, 0);
-        mesh.rotation.set(- Math.PI / 8, 0, 0);
-        mesh.scale.set(0.25, 1.5, 0.25);
-        group.add(mesh);
+        // var mesh = new THREE.Mesh(geometry, material.clone());
+        // mesh.position.set(0, - 0.05, 0);
+        // mesh.rotation.set(- Math.PI / 8, 0, 0);
+        // mesh.scale.set(0.25, 1.5, 0.25);
+        // group.add(mesh);
 
-        controller1.add(group.clone());
-        controller2.add(group.clone());
+        // controller1.add(group.clone());
+        // controller2.add(group.clone());
+
+        const controllerModelFactory = new XRControllerModelFactory();
+
+        controllerGrip1 = renderer.xr.getControllerGrip(0);
+        controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
+        scene.add(controllerGrip1);
+
+        controllerGrip2 = renderer.xr.getControllerGrip(1);
+        controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
+        scene.add(controllerGrip2);
 
         //
 
