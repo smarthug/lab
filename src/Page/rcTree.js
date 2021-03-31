@@ -80,7 +80,7 @@ export default function Demo() {
 
     function test(){
         console.log("test");
-        checker ? setTree(testtreeData) : setTree(treeData)
+        checker ? setTree([...testtreeData]) : setTree([...treeData])
         checker=!checker;
     }
     const onSelect = (selectedKeys, info) => {
