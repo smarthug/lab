@@ -149,6 +149,52 @@ export default function Main() {
         renderer.render(scene, camera);
     }
 
+    function onSelect( event ) {
+
+        console.log("select!!")
+    
+        // console.log(renderer.xr.getReferenceSpace())
+    
+    
+        // let result = renderer.xr.getReferenceSpace().getOffsetReferenceSpace(
+        //     new window.XRRigidTransform({x:0, y:0, z:10.0}, {x:0, y:0, z:1.0, w: 1.0}));
+    
+    
+        //     console.log(result)
+    
+    
+            renderer.xr.getSession().requestReferenceSpace("local")
+            .then((refSpace) => {
+              xrReferenceSpace = refSpace;
+              xrReferenceSpace = xrReferenceSpace.getOffsetReferenceSpace(
+                    new window.XRRigidTransform({x:0, y:0, z:0}, {x:0, y:30, z:1.0, w: 1.0}));
+                    renderer.xr.getSession().requestAnimationFrame(render);
+            });
+    
+        // const controller = event.target;
+    
+        // const intersections = getIntersections( controller );
+        // console.log(intersections)
+    
+        // if ( intersections.length > 0 ) {
+    
+        //     const intersection = intersections[ 0 ];
+    
+        //     const object = intersection.object;
+        //     const uv = intersection.uv;
+    
+        //     object.material.map.click( uv.x, 1 - uv.y );
+    
+        // }
+    
+    
+        // direct camera control ?
+        // console.log(renderer.xr)
+        // console.log(renderer.xr.getCamera())
+    
+        // camera.position.set(10,10,10);
+    }
+
     return <div ref={containerRef}>
         <div ref={vrButtonConRef}></div>
         <div ref={datConRef}></div>
@@ -157,45 +203,7 @@ export default function Main() {
 }
 
 
-function onSelect( event ) {
 
-    console.log("select!!")
-
-    // console.log(renderer.xr.getReferenceSpace())
-
-
-    // let result = renderer.xr.getReferenceSpace().getOffsetReferenceSpace(
-    //     new window.XRRigidTransform({x:0, y:0, z:10.0}, {x:0, y:0, z:1.0, w: 1.0}));
-
-
-    //     console.log(result)
-
-
-        renderer.xr.getSession().requestReferenceSpace("local")
-        .then((refSpace) => {
-          xrReferenceSpace = refSpace;
-          xrReferenceSpace = xrReferenceSpace.getOffsetReferenceSpace(
-                new window.XRRigidTransform({x:0, y:0, z:10.0}, {x:0, y:0, z:1.0, w: 1.0}));
-        //   xrSession.requestAnimationFrame(drawFrame);
-        });
-
-    // const controller = event.target;
-
-    // const intersections = getIntersections( controller );
-    // console.log(intersections)
-
-    // if ( intersections.length > 0 ) {
-
-    //     const intersection = intersections[ 0 ];
-
-    //     const object = intersection.object;
-    //     const uv = intersection.uv;
-
-    //     object.material.map.click( uv.x, 1 - uv.y );
-
-    // }
-
-}
 
 
 function getIntersections( controller ) {
