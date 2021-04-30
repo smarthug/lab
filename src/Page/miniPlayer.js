@@ -97,10 +97,12 @@ export default function Main() {
                 let miniWorld = scene.clone();
 
                 scene.add(miniWorld)
-                miniWorld.position.set(0, 0, -5)
-                miniWorld.scale.set(0.1, 0.1, 0.1)
+                miniWorld.position.set(0, 0, -0.3)
+                miniWorld.scale.set(0.005, 0.005, 0.005)
                 miniWorld.add(miniPlayer)
+                // miniWorld.renderOrder = 999;
                 camera.add(miniWorld)
+                scene.renderOrder = 999;
                 scene.add(camera)
 
                 //gltf.animations; // Array<THREE.AnimationClip>
@@ -137,7 +139,7 @@ export default function Main() {
         // update miniplayer's position based on camera * miniScalar
 
         //miniPlayer.position.set(/)/
-        tmpVector3.copy(camera.position.divideScalar(10));
+        tmpVector3.copy(camera.position);
         miniPlayer.position.copy(tmpVector3)
         renderer.render(scene, camera);
     }
