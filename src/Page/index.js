@@ -14,3 +14,5 @@ export * as AabbCamera from './aabbCamera'
 export * as CustomBufferGeometry from './customBufferGeometry'
 export * as NewTest from './newTest'
 export * as MiniWorld from './miniWorld'
+export * as WebXRBase from './webXRBase'
+
