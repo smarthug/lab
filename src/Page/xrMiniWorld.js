@@ -72,6 +72,9 @@ let deltaLine = new THREE.Line(TranslateHelperGeometry(), matHelper);
 let deltaLine2 = new THREE.Line(TranslateHelperGeometry(), matHelper)
 
 
+let ship;
+
+
 export default function Main() {
     const containerRef = useRef();
     const canvasRef = useRef();
@@ -87,9 +90,10 @@ export default function Main() {
     function init() {
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0x404040);
-        scene.fog = new THREE.Fog(scene.background, 10, 15);
+        // scene.fog = new THREE.Fog(scene.background, 10, 15);
 
-        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 20);
+        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1,
+            1.7976931348623157e8);
         camera.position.set(0, 1.6, 0);
 
         var color = new THREE.Color(0x505050);
@@ -218,6 +222,7 @@ export default function Main() {
         var geometry = new THREE.BoxGeometry(1, 1, 1);
         var material = new THREE.MeshNormalMaterial();
         cube = new THREE.Mesh(geometry, material);
+        ship = cube
         scene.add(cube);
 
 
@@ -235,8 +240,10 @@ export default function Main() {
          //Test();
         //'model/space_battle_cruiser/scene.gltf',
         // Load a glTF resource
+        //aurora_space_battleship
+        //bronze_replica_statue_of_liberty
         loader.load(
-            'model/bronze_replica_statue_of_liberty/scene.gltf',
+            'model/aurora_space_battleship/scene.gltf',
             (gltf) => {
 
 
@@ -249,20 +256,23 @@ export default function Main() {
                     }
                 });
                 console.log(gltf)
+                gltf.scene.position.set(0,0,-500)
+                ship = gltf.scene
                 scene.add(gltf.scene);
 
 
                 let miniWorld = scene.clone();
 
                 scene.add(miniWorld)
-                miniWorld.position.set(0, 0, -0.3)
-                miniWorld.scale.set(0.005, 0.005, 0.005)
+                miniWorld.position.set(0, 0.1,0)
+                miniWorld.scale.set(0.002, 0.002, 0.002)
                 miniWorld.add(miniPlayer)
                 // miniWorld.renderOrder = 999;
                 // camera.add(miniWorld)
-                controllerGrip1.add(miniWorld)
+                controller1.add(miniWorld);
+                // controllerGrip1.add(miniWorld)
                 scene.renderOrder = 999;
-                scene.add(camera)
+                // scene.add(camera)
 
                 //gltf.animations; // Array<THREE.AnimationClip>
                 //gltf.scene; // THREE.Group
@@ -333,7 +343,8 @@ export default function Main() {
         tmp.subVectors(destinationPos, playerPos)
 
         tmp.multiplyScalar(controlledObj.multipliedScalar);
-        box.position.copy(tmp.add(cube.position))
+        // box.position.copy(tmp.add(cube.position))
+        box.position.copy(tmp.add(ship.position))
 
         player.getWorldQuaternion(tmpQuaternion);
 
@@ -341,8 +352,10 @@ export default function Main() {
         tmp.set(1e-10, 1e-10, 1e-10).add(destinationPos).sub(playerPos);
         deltaLine.scale.copy(tmp);
 
-        deltaLine2.position.copy(cube.position);
-        tmp.set(1e-10, 1e-10, 1e-10).add(cube.position).sub(box.position).multiplyScalar(- 1);
+        // deltaLine2.position.copy(cube.position);
+        deltaLine2.position.copy(ship.position);
+        // tmp.set(1e-10, 1e-10, 1e-10).add(cube.position).sub(box.position).multiplyScalar(- 1);
+        tmp.set(1e-10, 1e-10, 1e-10).add(ship.position).sub(box.position).multiplyScalar(- 1);
         deltaLine2.scale.copy(tmp);
 
 
@@ -360,7 +373,8 @@ export default function Main() {
 
     function Test() {
         result = tmp.subVectors(destinationPos, playerPos)
-        cube.position.add(result.multiplyScalar(controlledObj.multipliedScalar));
+        // cube.position.add(result.multiplyScalar(controlledObj.multipliedScalar));
+        ship.position.add(result.multiplyScalar(controlledObj.multipliedScalar));
     }
 
 
