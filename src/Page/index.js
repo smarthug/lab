@@ -18,4 +18,6 @@ export * as WebXRBase from './webXRBase'
 export * as MiniPlayer from './miniPlayer'
 export * as SpatialControls from './spatialControls'
 export * as XRMiniWorld from './xrMiniWorld'
+export * as SkyAndTween from './skyandtween'
+export * as DistancePractice from './distanceChecker'
 

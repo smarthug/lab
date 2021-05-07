@@ -74,6 +74,7 @@ export default function Main() {
         light.castShadow = true;
         scene.add(light);
 
+        
         //Test();
         //'model/space_battle_cruiser/scene.gltf',
         // Load a glTF resource

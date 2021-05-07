@@ -66,15 +66,15 @@ export default function Main() {
         cameraControls = new CameraControls(camera, renderer.domElement);
 
 
-        const gui = new dat.GUI({ autoPlace: false });
-        gui.add(controllerObj, "width")
+        const gui = new dat.GUI({ width:300 });
+        gui.add(controllerObj, "width", 0.0, 1.0)
         gui.add(controllerObj, "bool")
         gui.add(controllerObj, "clicktest")
         console.log(gui)
 
         datConRef.current.append(gui.domElement)
 
-        let htmlMesh = new HTMLMesh(datConRef.current.childNodes[0]);
+        let htmlMesh = new HTMLMesh(gui.domElement);
         htmlMesh.position.set(1, 1.5, - 0.5);
         htmlMesh.rotation.y = - 0.5;
         scene.add(htmlMesh)
