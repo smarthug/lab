@@ -22,5 +22,6 @@ export * as XRMiniWorld from './xrMiniWorld'
 // export * as SkyAndTween from './skyandtween'
 export * as DistancePractice from './distanceChecker'
 export * as HowFarIsThisXR from './howFarIsThisXR'
-export * as sandbox from './sandbox'
+// export * as sandbox from './sandbox'
+export * as Animation from './animation'
 
