@@ -12,7 +12,12 @@ import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.j
 CameraControls.install({ THREE: THREE });
 
 let cube, scene, camera, renderer, cameraControls;
+let mixer;
 const clock = new THREE.Clock();
+
+let idleAction ,
+walkAction ,
+runAction;
 
 let tree;
 
@@ -20,7 +25,7 @@ export default function Main() {
   const containerRef = useRef();
   const canvasRef = useRef();
   const vrButtonConRef = useRef();
-  const [meter , setMeter] = useState(0);
+  const [meter, setMeter] = useState(0);
   useEffect(() => {
     Init();
     Animate();
@@ -64,9 +69,11 @@ export default function Main() {
     var material = new THREE.MeshNormalMaterial();
     cube = new THREE.Mesh(geometry, material);
     // scene.add(cube);
-    camera.position.z = 5;
-
+    camera.position.set(5,10,10);
     cameraControls = new CameraControls(camera, renderer.domElement);
+
+
+
 
     const grid = new InfiniteGridHelper(10, 100);
 
@@ -74,6 +81,9 @@ export default function Main() {
 
     LightSetUp();
     Loader();
+
+    // cameraControls.moveTo(0,0,0, true);
+    // cameraControls.setPosition(0,1,-3, true);
   }
 
   function Animate() {
@@ -84,18 +94,27 @@ export default function Main() {
     const delta = clock.getDelta();
     // const hasControlsUpdated = cameraControls.update(delta);
     cameraControls.update(delta);
+    if(mixer)
+    {
+
+      mixer.update( delta );
+    }
 
     renderer.render(scene, camera);
   }
 
-  function handleClick(){
-    setMeter(RandomMover());
+  function handleClick() {
+    // setMeter(RandomMover());
+
+    // cameraControls.setPosition(0,1,-3, true);
+    cameraControls.setLookAt(1.5,1.5,-3, 0,1,0,true);
   }
-  
 
   return (
     <div ref={containerRef}>
-        <h1 style={{ position: "absolute" , left:"30px", color:"white" }}>{meter}m</h1>
+      <h1 style={{ position: "absolute", left: "30px", color: "white" }}>
+        {meter}m
+      </h1>
       <button style={{ position: "absolute" }} onClick={handleClick}>
         Mover
       </button>
@@ -109,8 +128,6 @@ export default function Main() {
 //
 
 function Loader() {
- 
-
   const loader = new GLTFLoader()
     // .setCrossOrigin('anonymous')
     .setDRACOLoader(new DRACOLoader().setDecoderPath("assets/wasm/"))
@@ -142,8 +159,27 @@ function Loader() {
 
     // resolve(gltf);
     scene.add(scene2);
-    tree = scene2;
-    tree.scale.set(10, 10, 10);
+    // tree = scene2;
+    // tree.scale.set(10, 10, 10);
+
+    const animations = gltf.animations;
+
+    mixer = new THREE.AnimationMixer(scene2);
+
+    idleAction = mixer.clipAction(animations[0]);
+    walkAction = mixer.clipAction(animations[3]);
+    runAction = mixer.clipAction(animations[1]);
+
+    runAction.play();
+
+    cameraControls.setLookAt(1.5,1.5,-3, 0,1,0,true);
+
+    // actions = [idleAction, walkAction, runAction];
+
+    // activateAllActions();
+
+    // animate();
+    // Animate();
   });
 }
 
@@ -170,21 +206,19 @@ function Mover() {
 }
 
 function RandomMover() {
-    let foo = getRandomInt(-100)
-  tree.position.set(0,0,foo)
+  let foo = getRandomInt(-100);
+  tree.position.set(0, 0, foo);
 
-  return foo
-//   tree.position.add(new THREE.Vector3(0, 0, getRandomInt(-100)));
+  return foo;
+  //   tree.position.add(new THREE.Vector3(0, 0, getRandomInt(-100)));
 }
 
 function getRandomInt(max) {
-    //   return Math.floor(Math.random() * max);
-    let foo = round10(Math.floor(Math.random() * max), 1);
-    console.log(foo);
-    return foo;
-  }
-
-
+  //   return Math.floor(Math.random() * max);
+  let foo = round10(Math.floor(Math.random() * max), 1);
+  console.log(foo);
+  return foo;
+}
 
 /**
  * Decimal adjustment of a number.
