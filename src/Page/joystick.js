@@ -63,13 +63,19 @@ export default function Main() {
     const containerRef = useRef();
     const canvasRef = useRef();
     const vrButtonConRef = useRef();
+    const joystickConRef = useRef();
     const [meter, setMeter] = useState(0);
     useEffect(() => {
         Init();
         Animate();
 
 
-        var manager = nipplejs.create();
+        var manager = nipplejs.create({
+            zone:joystickConRef.current,
+            // mode: 'static',
+            // position: { left: '5%', top: '90%' },
+            // color: 'red'
+        });
 
         manager.on("move", function (evt, data) {
             // Do something.
@@ -229,9 +235,9 @@ export default function Main() {
 
     return (
         <div ref={containerRef}>
-            <h1 style={{ position: "absolute", left: "30px", color: "white" }}>
-                {meter}m
-      </h1>
+            <div ref={joystickConRef} style={{ position: "absolute",top:"90%", left: "5%", color: "white", width:"100px",height:"100px" }} />
+                
+            
             <button style={{ position: "absolute" }} onClick={handleClick}>
                 Mover
       </button>
