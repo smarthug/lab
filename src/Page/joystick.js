@@ -9,10 +9,7 @@ import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 
-// import virtualInput from './virtualInput'
-// import './virtualInput.css'
-// 
-// import $ from 'jquery'
+import nipplejs from 'nipplejs';
 
 
 CameraControls.install({ THREE: THREE });
@@ -71,38 +68,32 @@ export default function Main() {
         Init();
         Animate();
 
-        // console.log(virtualInput)
 
+        var manager = nipplejs.create();
 
-        // var joystick1 = new virtualInput.Joystick($(document.body), 120, { id: 'joystick1' });
-        // var joystick2 = new virtualInput.Joystick($(document.body), 120, { id: 'joystick2' });
+        manager.on("move", function (evt, data) {
+            // Do something.
+            // console.log(evt, data)
+            console.log(data.vector)
+            const { x, y } = data.vector;
+            horizonAxis = -x;
+            verticalAxis = y;
 
-        // var radToDeg = function (rad) {
-        //     return rad * 180 / Math.PI;
-        // };
+            runAction.play();
+            idleAction.stop();
+        })
 
-        // joystick1.addEventListener('move', function () {
+        manager.on("end", function (evt, data) {
+            // Do something.
+            // console.log(evt, data)
 
-        //     var rad = this.getAngle();
+            horizonAxis = 0;
+            verticalAxis = 0;
+            // idleAction.play();
 
-        //     console.log(
-        //         rad + 'rad',
-        //         radToDeg(rad) + 'deg'
-        //     );
-
-        // });
-
-        // joystick2.addEventListener('move', function () {
-
-        //     var rad = this.getAngle();
-
-        //     console.log(
-        //         rad + 'rad',
-        //         radToDeg(rad) + 'deg'
-        //     );
-
-        // });
-
+            runAction.stop();
+            idleAction.play();
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
