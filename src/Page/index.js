@@ -26,5 +26,6 @@
 // export * as Animation from './animation'
 // export * as KeyboardRun from './keyboardRun'
 // export * as KeyboardRunRight from './keyboardRunRight'
-export * as Joystick from './joystick'
+// export * as Joystick from './joystick'
+export * as Gamepad from './gamepad'
 
