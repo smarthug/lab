@@ -92,7 +92,6 @@ export default function Main() {
   }, []);
 
   function resizer() {
-    
     canvasRef.current.width = window.innerWidth;
     canvasRef.current.height = window.innerHeight;
     // Set the camera's aspect ratio
@@ -129,6 +128,9 @@ export default function Main() {
       0.1,
       10000
     );
+
+    canvasRef.current.width = window.innerWidth;
+    canvasRef.current.height = window.innerHeight;
 
     renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -197,12 +199,12 @@ export default function Main() {
   }
 
   return (
-    <div ref={containerRef}>
+    <div style={{ width: "100%", height: "100vh", overflow:"hidden" }} ref={containerRef}>
       <div
         ref={joystickConRef}
         style={{
           position: "absolute",
-          top: "90%",
+          top: "80%",
           left: "5%",
           color: "white",
           width: "100px",
@@ -210,9 +212,9 @@ export default function Main() {
         }}
       />
 
-      <button style={{ position: "absolute" }} onClick={handleClick}>
+      {/* <button style={{ position: "absolute" }} onClick={handleClick}>
         Mover
-      </button>
+      </button> */}
       <canvas ref={canvasRef} />
       <div ref={vrButtonConRef}></div>
     </div>
@@ -233,7 +235,6 @@ function Loader() {
   loader.load("model/Soldier.glb", (gltf) => {
     const scene2 = gltf.scene || gltf.scenes[0];
     const clips = gltf.animations || [];
-
     if (!scene2) {
       // Valid, but not supported by this viewer.
       throw new Error(
@@ -241,18 +242,13 @@ function Loader() {
           " it may contain individual 3D resources."
       );
     }
-
     player = scene2;
     scene.add(player);
-
     const animations = gltf.animations;
-
     mixer = new THREE.AnimationMixer(player);
-
     idleAction = mixer.clipAction(animations[0]);
     walkAction = mixer.clipAction(animations[3]);
     runAction = mixer.clipAction(animations[1]);
-
     idleAction.play();
   });
 }
@@ -260,14 +256,11 @@ function Loader() {
 function LightSetUp() {
   const light = new THREE.AmbientLight(0x404040); // soft white light
   scene.add(light);
-
   // White directional light at half intensity shining from the top.
   const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
   scene.add(directionalLight);
-
   const hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 4);
   scene.add(hemiLight);
-
   const spotLight = new THREE.SpotLight(0xffa95c, 4);
   spotLight.position.set(-50, 350, 50);
   spotLight.castShadow = true;
@@ -275,8 +268,6 @@ function LightSetUp() {
 }
 
 function Mover() {
-  console.log("wtf");
-
   //   var vector = new THREE.Vector3(1, 0, 0);
   console.log(cameraVector);
   rightCameraVector.copy(cameraVector);
