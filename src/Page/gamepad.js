@@ -204,8 +204,8 @@ export default function Main() {
         ref={joystickConRef}
         style={{
           position: "absolute",
-          top: "80%",
-          left: "5%",
+          bottom: "50px",
+        //   left: "5px",
           color: "white",
           width: "100px",
           height: "100px",
