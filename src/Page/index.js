@@ -25,5 +25,6 @@
 // export * as sandbox from './sandbox'
 // export * as Animation from './animation'
 // export * as KeyboardRun from './keyboardRun'
-export * as KeyboardRunRight from './keyboardRunRight'
+// export * as KeyboardRunRight from './keyboardRunRight'
+export * as Joystick from './joystick'
 
