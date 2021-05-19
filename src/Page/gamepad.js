@@ -41,8 +41,21 @@ let tmpMatrix = new THREE.Matrix4();
 let centerVec = new THREE.Vector3(0, 0, 0);
 let upVec = new THREE.Vector3(0, 1, 0);
 
+let isGamepadConnected = false;
+
 window.addEventListener("keydown", onKeyDown);
 window.addEventListener("keyup", onKeyUp);
+
+window.addEventListener("gamepadconnected", (event) => {
+  console.log("A gamepad connected:");
+  console.log(event.gamepad);
+  isGamepadConnected = true;
+});
+
+window.addEventListener("gamepaddisconnected", (event) => {
+  console.log("A gamepad disconnected:");
+  console.log(event.gamepad);
+});
 
 let scene, camera, renderer, cameraControls;
 let mixer;
@@ -136,10 +149,10 @@ export default function Main() {
       antialias: true,
       canvas: canvasRef.current,
     });
-    // renderer.xr.enabled = true;
+    renderer.xr.enabled = true;
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    // renderer.xr.setFramebufferScaleFactor(2.0);
+    renderer.xr.setFramebufferScaleFactor(2.0);
 
     camera.position.set(5, 10, 10);
     cameraControls = new CameraControls(camera, renderer.domElement);
@@ -153,6 +166,33 @@ export default function Main() {
 
   function Animate() {
     requestAnimationFrame(Animate);
+
+    if (isGamepadConnected) {
+      var gamepads = navigator.getGamepads();
+      // console.log(gamepads);
+
+      try {
+        let result =
+          Math.abs(gamepads[0].axes[0]) + Math.abs(gamepads[0].axes[1]);
+
+        if (result > 0.2) {
+          horizonAxis = -gamepads[0].axes[0];
+          verticalAxis = -gamepads[0].axes[1];
+
+          runAction.play();
+          idleAction.stop();
+        } else {
+          horizonAxis = 0;
+          verticalAxis = 0;
+
+          runAction.stop();
+          idleAction.play();
+        }
+      } catch (error) {
+        console.log(gamepads[0]);
+        console.error(error);
+      }
+    }
 
     const delta = clock.getDelta();
     // const hasControlsUpdated = cameraControls.update(delta);
@@ -199,13 +239,21 @@ export default function Main() {
   }
 
   return (
-    <div style={{ width: "100%", height: "100vh", overflow:"hidden" }} ref={containerRef}>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        overflowX: "hidden",
+        overflowY: "hidden",
+      }}
+      ref={containerRef}
+    >
       <div
         ref={joystickConRef}
         style={{
           position: "absolute",
           bottom: "50px",
-        //   left: "5px",
+          //   left: "5px",
           color: "white",
           width: "100px",
           height: "100px",
