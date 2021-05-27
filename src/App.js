@@ -1,5 +1,6 @@
 import './App.css';
-import * as Pages from './Page'
+// import * as Pages from './Page'
+import * as Pages from './examples'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 
