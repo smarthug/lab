@@ -287,7 +287,7 @@ function Loader() {
       // Valid, but not supported by this viewer.
       throw new Error(
         "This model contains no scene, and cannot be viewed here. However," +
-          " it may contain individual 3D resources."
+        " it may contain individual 3D resources."
       );
     }
     player = scene2;
