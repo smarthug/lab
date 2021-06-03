@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import CameraControls from "camera-controls";
 
@@ -10,9 +10,10 @@ import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.j
 
 import nipplejs from "nipplejs";
 
-import Enemy from '../Actors/Enemy'
 import GameScene from '../Actors/GameScene'
 import { resizer, SceneSetUp } from '../Utils/utils'
+
+import { useStore } from '../Utils/store'
 
 CameraControls.install({ THREE: THREE });
 
@@ -44,10 +45,9 @@ let tmpMatrix = new THREE.Matrix4();
 let centerVec = new THREE.Vector3(0, 0, 0);
 let upVec = new THREE.Vector3(0, 1, 0);
 
-let isGamepadConnected = false;
 
-window.addEventListener("keydown", onKeyDown);
-window.addEventListener("keyup", onKeyUp);
+// window.addEventListener("keydown", onKeyDown);
+// window.addEventListener("keyup", onKeyUp);
 
 
 
@@ -55,7 +55,9 @@ let scene, camera, renderer, cameraControls;
 let mixer = { update: () => { } };
 const clock = new THREE.Clock();
 
-let idleAction, walkAction, runAction;
+export let idleAction = { play: () => { }, stop: () => { } };
+export let walkAction = { play: () => { }, stop: () => { } };
+export let runAction = { play: () => { }, stop: () => { } };
 
 let player;
 
@@ -95,6 +97,18 @@ export default function Main() {
             runAction.stop();
             idleAction.play();
         });
+
+        useStore.subscribe(state => {
+            console.log(state)
+            if (state.horizonAxis === 0 && state.verticalAxis === 0) {
+                console.log("stop!")
+                runAction.stop();
+                idleAction.play();
+            }
+        }, state => state.horizonAxis)
+
+
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -136,17 +150,24 @@ export default function Main() {
     }
 
     function Animate() {
+        const { controls } = useStore.getState()
+        const { horizonAxis, verticalAxis } = controls;
         requestAnimationFrame(Animate);
 
         const delta = clock.getDelta();
         cameraControls.update(delta);
 
+
+
         mixer.update(delta);
+
+
 
 
         if (verticalAxis !== 0 || horizonAxis !== 0) {
 
-
+            runAction.play();
+            idleAction.stop();
 
             moveVector.set(
                 camera.getWorldDirection(cameraVector).x,
@@ -333,6 +354,7 @@ function onKeyUp(event) {
     }
 }
 
+// 이걸 on up keyboard event 에서 ...
 function shouldRunStop() {
     if (horizonAxis === 0 && verticalAxis === 0) {
         runAction.stop();
