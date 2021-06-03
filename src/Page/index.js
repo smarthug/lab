@@ -28,5 +28,6 @@
 // export * as KeyboardRunRight from './keyboardRunRight'
 // export * as Joystick from './joystick'
 // export * as Gamepad from './gamepad'
-export * as EnemyScene from './enemyScene'
+// export * as EnemyScene from './enemyScene'
+export * as InputStore from './inputStore'
 
