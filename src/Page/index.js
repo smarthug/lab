@@ -32,3 +32,4 @@
 export * as InputStore from './inputStore'
 export * as XRTeleport from './xrTeleport'
 export * as SpatialControls from './spatialTeleport'
+export * as R3F from './convertTor3f'
