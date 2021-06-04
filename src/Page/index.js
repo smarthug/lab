@@ -31,4 +31,4 @@
 // export * as EnemyScene from './enemyScene'
 export * as InputStore from './inputStore'
 export * as XRTeleport from './xrTeleport'
-
+export * as SpatialControls from './spatialTeleport'
