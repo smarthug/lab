@@ -153,16 +153,16 @@ export default function Main() {
         controller1.addEventListener('selectend', onSelectEnd);
         controller1.addEventListener('select', onMove);
 
-        //cameraRig 방식 ...
+        //cameraRig 방식 ... scene 을 camera Rig 로 교체 ... 
         controller1.addEventListener('squeezestart', onLeftSqueezeStart);
-        scene.add(controller1);
+        cameraRig.add(controller1);
 
         controller2 = renderer.xr.getController(1);
         controller2.addEventListener('selectstart', onSelectStart);
         controller2.addEventListener('selectend', onSelectEnd);
 
         controller2.addEventListener('squeezestart', onRightSqueezeStart);
-        scene.add(controller2);
+        cameraRig.add(controller2);
 
 
 
@@ -170,11 +170,11 @@ export default function Main() {
 
         controllerGrip1 = renderer.xr.getControllerGrip(0);
         controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
-        scene.add(controllerGrip1);
+        cameraRig.add(controllerGrip1);
 
         controllerGrip2 = renderer.xr.getControllerGrip(1);
         controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
-        scene.add(controllerGrip2);
+        cameraRig.add(controllerGrip2);
 
         //
 
