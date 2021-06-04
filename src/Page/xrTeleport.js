@@ -118,8 +118,6 @@ export default function Main() {
         controller1.addEventListener('select', onMove);
 
         controller1.addEventListener('squeezestart', onLeftSqueezeStart);
-        // controller1.addEventListener('squeezeEnd', onMove);
-        // controller1.addEventListener('squeeze', onMove);
         scene.add(controller1);
 
         controller2 = renderer.xr.getController(1);
@@ -127,8 +125,6 @@ export default function Main() {
         controller2.addEventListener('selectend', onSelectEnd);
 
         controller2.addEventListener('squeezestart', onRightSqueezeStart);
-        // controller2.addEventListener('squeezeEnd', onMove);
-        // controller2.addEventListener('squeeze', onMove);
         scene.add(controller2);
 
 
