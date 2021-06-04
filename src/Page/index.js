@@ -30,4 +30,5 @@
 // export * as Gamepad from './gamepad'
 // export * as EnemyScene from './enemyScene'
 export * as InputStore from './inputStore'
+export * as XRTeleport from './xrTeleport'
 
