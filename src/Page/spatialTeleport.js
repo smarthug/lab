@@ -50,6 +50,9 @@ const matHelper = new THREE.MeshBasicMaterial({
 
 
 let deltaLine = new THREE.Line(TranslateHelperGeometry(), matHelper);
+let deltaLine2 = new THREE.Line(TranslateHelperGeometry(), matHelper)
+
+let box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshNormalMaterial({ wireframe: true }));
 
 export default function Main() {
     const containerRef = useRef();
@@ -187,8 +190,12 @@ export default function Main() {
         controller1.add(destination);
 
 
+        scene.add(box)
 
         scene.add(deltaLine)
+        scene.add(deltaLine2);
+
+
     }
 
     function Animate() {
@@ -206,14 +213,19 @@ export default function Main() {
 
         tmp.subVectors(destinationPos, playerPos)
 
-        // tmp.multiplyScalar(controlledObj.multipliedScalar);
-        // box.position.copy(tmp.add(cube.position))
+        tmp.multiplyScalar(3);
+        box.position.copy(tmp.add(cameraRig.position))
 
         player.getWorldQuaternion(tmpQuaternion);
 
         deltaLine.position.copy(playerPos);
         tmp.set(1e-10, 1e-10, 1e-10).add(destinationPos).sub(playerPos);
         deltaLine.scale.copy(tmp);
+
+
+        deltaLine2.position.copy(cameraRig.position);
+        tmp.set(1e-10, 1e-10, 1e-10).add(cameraRig.position).sub(box.position).multiplyScalar(- 1);
+        deltaLine2.scale.copy(tmp);
 
 
 
