@@ -8,29 +8,18 @@ import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 
-import nipplejs from "nipplejs";
+
 
 import GameScene from '../Actors/GameScene'
 import { resizer, SceneSetUp } from '../Utils/utils'
 
 import { useStore } from '../Utils/store'
+import {JoystickInit} from '../Utils/joyStick'
 
 CameraControls.install({ THREE: THREE });
 
-const KEY_W = 87;
-const KEY_UP = 38;
-const KEY_S = 83;
-const KEY_DOWN = 40;
-const KEY_A = 65;
-const KEY_LEFT = 37;
-const KEY_D = 68;
-const KEY_RIGHT = 39;
-const KEY_SPACE = 32;
 
 let playerSpeed = 5.5;
-
-let horizonAxis = 0;
-let verticalAxis = 0;
 
 let unitMoveVector = new THREE.Vector3();
 
@@ -67,48 +56,11 @@ export default function Main() {
     const vrButtonConRef = useRef();
     const joystickConRef = useRef();
 
+    const set = useStore(state => state.set)
+
     useEffect(() => {
         Init();
         Animate();
-
-
-
-        var manager = nipplejs.create({
-            zone: joystickConRef.current,
-            mode: 'semi',
-            // position: { left: '5%', top: '90%' },
-            // color: 'red'
-        });
-
-        manager.on("move", function (evt, data) {
-            //   console.log(data.vector);
-            const { x, y } = data.vector;
-            horizonAxis = -x;
-            verticalAxis = y;
-
-            runAction.play();
-            idleAction.stop();
-        });
-
-        manager.on("end", function (evt, data) {
-            horizonAxis = 0;
-            verticalAxis = 0;
-
-            runAction.stop();
-            idleAction.play();
-        });
-
-        useStore.subscribe(state => {
-            console.log(state)
-            if (state.horizonAxis === 0 && state.verticalAxis === 0) {
-                console.log("stop!")
-                runAction.stop();
-                idleAction.play();
-            }
-        }, state => state.horizonAxis)
-
-
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -147,6 +99,9 @@ export default function Main() {
 
 
         scene.beginPlay();
+
+
+        JoystickInit(joystickConRef, set);
     }
 
     function Animate() {
@@ -266,98 +221,3 @@ function Loader() {
     });
 }
 
-
-
-
-
-function onKeyDown(event) {
-    switch (event.keyCode) {
-        case KEY_W:
-        case KEY_UP:
-            // this.isUp = true;
-            verticalAxis = 1;
-            runAction.play();
-            idleAction.stop();
-            //   console.log(verticalAxis);
-            break;
-
-        case KEY_S:
-        case KEY_DOWN:
-            // this.isDown = true;
-            runAction.play();
-            idleAction.stop();
-            verticalAxis = -1;
-            break;
-
-        case KEY_A:
-        case KEY_LEFT:
-            horizonAxis = 1;
-            runAction.play();
-            idleAction.stop();
-            // this.isLeft = true;
-            break;
-
-        case KEY_D:
-        case KEY_RIGHT:
-            horizonAxis = -1;
-            runAction.play();
-            idleAction.stop();
-            // this.isRight = true;
-            break;
-
-        case KEY_SPACE:
-            // this.jump();
-            break;
-
-        default:
-            return;
-    }
-}
-
-function onKeyUp(event) {
-    switch (event.keyCode) {
-        case KEY_W:
-        case KEY_UP:
-            // this.isUp = false;
-            verticalAxis = 0;
-            shouldRunStop();
-            //   console.log(verticalAxis);
-            break;
-
-        case KEY_S:
-        case KEY_DOWN:
-            // this.isDown = false;
-            //   idleAction.play();
-            verticalAxis = 0;
-            shouldRunStop();
-            break;
-
-        case KEY_A:
-        case KEY_LEFT:
-            horizonAxis = 0;
-            shouldRunStop();
-            // this.isLeft = false;
-            break;
-
-        case KEY_D:
-        case KEY_RIGHT:
-            horizonAxis = 0;
-            shouldRunStop();
-            // this.isRight = false;
-            break;
-
-        case KEY_SPACE:
-            break;
-
-        default:
-            return;
-    }
-}
-
-// 이걸 on up keyboard event 에서 ...
-function shouldRunStop() {
-    if (horizonAxis === 0 && verticalAxis === 0) {
-        runAction.stop();
-        idleAction.play();
-    }
-}

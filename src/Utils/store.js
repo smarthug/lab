@@ -27,6 +27,7 @@ const useStore = create((set, get) => {
     return {
         set,
         get,
+        // increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
         ready: false,
         controls: { horizonAxis: 0, verticalAxis: 0 },
         velocity: [0, 0, 0],
