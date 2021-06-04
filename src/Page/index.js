@@ -27,5 +27,8 @@
 // export * as KeyboardRun from './keyboardRun'
 // export * as KeyboardRunRight from './keyboardRunRight'
 // export * as Joystick from './joystick'
-export * as Gamepad from './gamepad'
-
+// export * as Gamepad from './gamepad'
+// export * as EnemyScene from './enemyScene'
+export * as InputStore from './inputStore'
+export * as XRTeleport from './xrTeleport'
+export * as SpatialControls from './spatialTeleport'
