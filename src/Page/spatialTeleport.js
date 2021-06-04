@@ -28,6 +28,8 @@ let result = new THREE.Vector3();
 let tmp = new THREE.Vector3();
 let tmpQuaternion = new THREE.Quaternion();
 
+let multipliedScalar = 3;
+
 
 function TranslateHelperGeometry() {
 
@@ -141,11 +143,13 @@ export default function Main() {
         function onLeftSqueezeStart() {
             // controlledObj.multipliedScalar++
             // console.log(controlledObj.multipliedScalar)
+            multipliedScalar--
         }
 
         function onRightSqueezeStart() {
             // controlledObj.multipliedScalar--
             // console.log(controlledObj.multipliedScalar)
+            multipliedScalar++
         }
 
         controller1 = renderer.xr.getController(0);
@@ -154,14 +158,14 @@ export default function Main() {
         controller1.addEventListener('select', onMove);
 
         //cameraRig 방식 ... scene 을 camera Rig 로 교체 ... 
-        controller1.addEventListener('squeezestart', onLeftSqueezeStart);
+        controller1.addEventListener('squeezestart',onRightSqueezeStart );
         cameraRig.add(controller1);
 
         controller2 = renderer.xr.getController(1);
         controller2.addEventListener('selectstart', onSelectStart);
         controller2.addEventListener('selectend', onSelectEnd);
 
-        controller2.addEventListener('squeezestart', onRightSqueezeStart);
+        controller2.addEventListener('squeezestart',onLeftSqueezeStart );
         cameraRig.add(controller2);
 
 
@@ -213,7 +217,7 @@ export default function Main() {
 
         tmp.subVectors(destinationPos, playerPos)
 
-        tmp.multiplyScalar(3);
+        tmp.multiplyScalar(multipliedScalar);
         box.position.copy(tmp.add(cameraRig.position))
 
         player.getWorldQuaternion(tmpQuaternion);
@@ -245,7 +249,7 @@ export default function Main() {
 
 
         result = tmp.subVectors(destinationPos, playerPos)
-        cameraRig.position.add(result.multiplyScalar(3));
+        cameraRig.position.add(result.multiplyScalar(multipliedScalar));
 
     }
 
