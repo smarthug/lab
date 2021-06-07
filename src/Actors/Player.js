@@ -35,12 +35,12 @@ let upVec = new THREE.Vector3(0, 1, 0);
 export default class Player extends Actor {
   constructor() {
     super();
-    this.add(
-      new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshNormalMaterial()
-      )
-    );
+    // this.add(
+    //   new THREE.Mesh(
+    //     new THREE.BoxGeometry(1, 1, 1),
+    //     new THREE.MeshNormalMaterial()
+    //   )
+    // );
     Loader(this);
   }
 
