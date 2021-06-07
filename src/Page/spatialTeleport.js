@@ -251,6 +251,9 @@ export default function Main() {
         result = tmp.subVectors(destinationPos, playerPos)
         cameraRig.position.add(result.multiplyScalar(multipliedScalar));
 
+        // cameraRig.lookAt(0,0,0)
+        cameraRig.lookAt(0,cameraRig.position.y,0)
+
     }
 
     return (
