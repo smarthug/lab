@@ -1,5 +1,7 @@
 import nipplejs from "nipplejs";
-import { runAction, idleAction } from '../Page/inputStore'
+// import { runAction, idleAction } from '../Page/inputStore'
+import { runAction, idleAction } from '../Actors/Player'
+
 
 export function JoystickInit(joystickConRef, set) {
 

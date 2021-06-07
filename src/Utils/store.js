@@ -1,6 +1,7 @@
 import create from 'zustand'
 
-import { runAction, idleAction } from '../Page/inputStore'
+// import { runAction, idleAction } from '../Page/inputStore'
+import { runAction, idleAction } from '../Actors/Player'
 // my case 0 or 1 
 function registerKeys(target, event, up = true) {
     const downHandler = ({ key }) => target.indexOf(key) !== -1 && event(1)

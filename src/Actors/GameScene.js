@@ -31,9 +31,9 @@ export default class GameScene extends THREE.Scene {
         })
     }
 
-    tick() {
+    tick(camera,delta) {
         this.tickArr.map((v, i) => {
-            v.tick();
+            v.tick(camera,delta);
         })
     }
 
