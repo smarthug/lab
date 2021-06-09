@@ -89,12 +89,12 @@ export default class Player extends Actor {
 
       // if (verticalAxis !== 0 || horizonAxis !== 0) {
       unitMoveVector.multiplyScalar(delta).multiplyScalar(playerSpeed);
-      player.position.add(unitMoveVector);
+      this.position.add(unitMoveVector);
 
       tmpMatrix.lookAt(centerVec, unitMoveVector, upVec);
 
       tmpQuaternion.setFromRotationMatrix(tmpMatrix);
-      player.setRotationFromQuaternion(tmpQuaternion);
+      this.setRotationFromQuaternion(tmpQuaternion);
     }
   }
 }
