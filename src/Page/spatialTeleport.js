@@ -210,7 +210,7 @@ export default function Main() {
         // const hasControlsUpdated = cameraControls.update(delta);
         cameraControls.update(delta);
 
-        deltaLine.visible = true;
+        // deltaLine.visible = true;
         // deltaLine2.visible = true
         player.getWorldPosition(playerPos)
         destination.getWorldPosition(destinationPos)
