@@ -37,3 +37,5 @@ export * as SpatialControls from './spatialTeleport'
 export * as TraceLogic from './traceLogic'
 
 export * as Shader from './shader'
+
+export * as ClassSpatialControls from './classSpatial'
