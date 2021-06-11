@@ -35,3 +35,5 @@ export * as SpatialControls from './spatialTeleport'
 // export * as R3F from './convertTor3f'
 // export * as HardAsync from './hardAsync'
 export * as TraceLogic from './traceLogic'
+
+export * as Shader from './shader'
