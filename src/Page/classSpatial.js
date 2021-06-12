@@ -163,10 +163,10 @@ export default function Main() {
         // const hasControlsUpdated = cameraControls.update(delta);
         cameraControls.update(delta);
 
-       if(bool){
+    //    if(bool){
 
            spatialControls.update();
-       }
+    //    }
 
 
 

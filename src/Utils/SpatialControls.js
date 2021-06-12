@@ -41,7 +41,7 @@ export default class SpatialControls extends THREE.EventDispatcher {
         this._resultVector = new THREE.Vector3();
 
         // teleport distance multiply scalar
-        this.multiplyScalar = 3;
+        this._multiplyScalar = 3;
 
 
         const onSelectEnd = () => {
@@ -49,11 +49,11 @@ export default class SpatialControls extends THREE.EventDispatcher {
         }
 
         const onLeftSqueezeStart = () => {
-            this.multiplyScalar--
+            this._multiplyScalar--
         }
 
         const onRightSqueezeStart = () => {
-            this.multiplyScalar++
+            this._multiplyScalar++
         }
 
        
@@ -71,8 +71,8 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
         this._tmpVector.subVectors(this._destHandPos, this._playerHandPos)
 
-        this._tmpVector.multiplyScalar(this.multiplyScalar);
-        this._destMarker.position.copy(this._tmpVector.add(this.cameraRig.position))
+        this._tmpVector.multiplyScalar(this._multiplyScalar);
+        this._destMarker.position.copy(this._tmpVector.add(this._cameraRig.position))
 
         // player.getWorldQuaternion(tmpQuaternion);
 
