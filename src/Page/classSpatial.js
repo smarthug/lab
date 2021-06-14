@@ -141,7 +141,8 @@ export default function Main() {
 
         //
 
-
+        let destMarker = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshNormalMaterial({ wireframe: true }));
+        scene.add(destMarker)
         
 
         
@@ -152,7 +153,7 @@ export default function Main() {
         // scene.add(deltaLine)
         // scene.add(deltaLine2);
 
-        spatialControls = new SpatialControls(cameraRig,controller1,controller2,scene)
+        spatialControls = new SpatialControls(cameraRig,controller1,controller2,destMarker)
     }
 
     function Animate() {

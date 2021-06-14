@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 export default class SpatialControls extends THREE.EventDispatcher {
 
-    constructor(cameraRig,controller1, controller2,scene) {
+    constructor(cameraRig,controller1, controller2,destMarker) {
         super();
 
         // player
@@ -34,8 +34,8 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
         //box 
         //marker to show where to be teleported
-        this._destMarker = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshNormalMaterial({ wireframe: true }));
-        scene.add(this._destMarker)
+        this._destMarker = destMarker
+       
 
         this._tmpVector = new THREE.Vector3();
         this._resultVector = new THREE.Vector3();
