@@ -38,6 +38,8 @@ export * as TraceLogic from './traceLogic'
 
 // export * as Shader from './shader'
 
-export * as ClassSpatialControls from './classSpatial'
+// export * as ClassSpatialControls from './classSpatial'
 
 export * as Text from './textTest'
+
+export * as JoystickSpatial from './joystickRotateSpatial'

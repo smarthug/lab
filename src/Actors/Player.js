@@ -72,6 +72,7 @@ export default class Player extends Actor {
         0,
         camera.getWorldDirection(cameraVector).z
       );
+      //카메라가아닌, controller 의 ... 
 
       rightCameraVector.copy(moveVector);
 
