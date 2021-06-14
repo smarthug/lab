@@ -53,5 +53,5 @@ function LightSetUp(scene) {
     const spotLight = new THREE.SpotLight(0xffa95c, 4);
     spotLight.position.set(-50, 350, 50);
     spotLight.castShadow = true;
-    scene.add(spotLight);
+    // scene.add(spotLight);
 }
