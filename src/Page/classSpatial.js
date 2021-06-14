@@ -178,7 +178,8 @@ export default function Main() {
       cameraRig,
       controller1,
       controller2,
-      destMarker
+      destMarker,
+      true
     );
   }
 

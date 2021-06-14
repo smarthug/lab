@@ -36,6 +36,8 @@ export * as SpatialControls from './spatialTeleport'
 // export * as HardAsync from './hardAsync'
 export * as TraceLogic from './traceLogic'
 
-export * as Shader from './shader'
+// export * as Shader from './shader'
 
 export * as ClassSpatialControls from './classSpatial'
+
+export * as Text from './textTest'
