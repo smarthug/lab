@@ -152,11 +152,24 @@ export default function Main() {
     // Loader("model/duck.gltf", destMarker)
 
     // 후처리 코드 ...
-    Loader("model/LittlestTokyo.glb", scene, (obj) => {
-      obj.position.set(0, 200, -300);
-    //   obj.scale.set(0.1,0.1,0.1)
-    });
+    // Loader("model/LittlestTokyo.glb", scene, (obj) => {
+    //   obj.position.set(0, 200, -300);
+    // //   obj.scale.set(0.1,0.1,0.1)
+    // });
     // scene.add(box)
+
+    // Loader("model/farm.gltf", scene, (obj) => {
+    //     obj.scale.set(10,10,10)
+    //     obj.position.set(0, 0, -10);
+    //   //   obj.scale.set(0.1,0.1,0.1)
+    //   });
+
+
+      Loader("model/house.gltf", scene, (obj) => {
+        obj.scale.set(15,15,15)
+        obj.position.set(0, 0, -10);
+      //   obj.scale.set(0.1,0.1,0.1)
+      });
 
     // scene.add(deltaLine)
     // scene.add(deltaLine2);
