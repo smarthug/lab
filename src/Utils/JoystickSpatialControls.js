@@ -10,6 +10,7 @@ let cameraVec = new THREE.Vector3();
 let forwardVec = new THREE.Vector3();
 let rightVec = new THREE.Vector3();
 let tmpVec = new THREE.Vector3();
+let directionVec = new THREE.Vector3();
 
 export default class SpatialControls extends THREE.EventDispatcher {
   constructor(
@@ -26,6 +27,8 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
     // player
     this._cameraRig = cameraRig;
+
+    this._hander = lefthanded ? "left":"right"
 
     // TODO: right, left handed agnostic
     // text FROM rather than Green ball
@@ -158,8 +161,8 @@ export default class SpatialControls extends THREE.EventDispatcher {
         if (
           sourceXR &&
           sourceXR.gamepad &&
-          (sourceXR.gamepad.axes[2] || sourceXR.gamepad.axes[3])
-          // sourceXR.handedness == controller1.name
+          (sourceXR.gamepad.axes[2] || sourceXR.gamepad.axes[3]) &&
+          sourceXR.handedness == this._hander
         ) {
           // var didPulse = sourceXR.gamepad.hapticActuators[0].pulse(0.8, 100);
 
@@ -229,5 +232,13 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
     // this._cameraRig.lookAt(0, this._cameraRig.position.y, 0)
     // 0 , 0 을 각각 축 axis 로 해야겠네 ...
+
+
+    this._destMarker.getWorldDirection(directionVec);
+
+    tmpMatrix.lookAt(centerVec, directionVec, upVec);
+
+    tmpQuaternion.setFromRotationMatrix(tmpMatrix);
+    this._cameraRig.setRotationFromQuaternion(tmpQuaternion);
   }
 }
