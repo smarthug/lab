@@ -12,14 +12,16 @@ let rightVec = new THREE.Vector3();
 let tmpVec = new THREE.Vector3();
 let directionVec = new THREE.Vector3();
 
+const isOculusBrowser = /OculusBrowser/.test(navigator.userAgent);
+
 export default class SpatialControls extends THREE.EventDispatcher {
   constructor(
     xr,
     cameraRig,
+    controller0,
     controller1,
-    controller2,
     destMarker,
-    lefthanded = false
+    righthanded = true
   ) {
     super();
 
@@ -28,7 +30,7 @@ export default class SpatialControls extends THREE.EventDispatcher {
     // player
     this._cameraRig = cameraRig;
 
-    this._hander = lefthanded ? "left":"right"
+    this._hander = righthanded ? "right" : "left"
 
     // TODO: right, left handed agnostic
     // text FROM rather than Green ball
@@ -39,7 +41,7 @@ export default class SpatialControls extends THREE.EventDispatcher {
       new THREE.MeshStandardMaterial({ color: "green" })
     );
     this._playerHand.position.set(0, 0.05, 0);
-    this._playerHand.add();
+    // this._playerHand.add();
 
     // text Destination rather than Green ball
     //a hand that represent the destination to teleport
@@ -51,13 +53,13 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
     // left , or right handed ???
 
-    if (lefthanded) {
-      controller1.add(this._playerHand);
-      controller2.add(this._destHand);
-    } else {
-      controller2.add(this._playerHand);
-      controller1.add(this._destHand);
-    }
+    // if (righthanded) {
+    //   controller0.add(this._playerHand);
+    //   controller1.add(this._destHand);
+    // } else {
+    //   controller1.add(this._playerHand);
+    //   controller0.add(this._destHand);
+    // }
 
     // each xr controller hand position represent player positon, teleport destination position
     this._playerHandPos = new THREE.Vector3();
@@ -87,15 +89,55 @@ export default class SpatialControls extends THREE.EventDispatcher {
       this._multiplyScalar *= 2;
     };
 
+    controller0.addEventListener("selectend", onSelectEnd);
     controller1.addEventListener("selectend", onSelectEnd);
-    controller2.addEventListener("selectend", onSelectEnd);
 
-    if (lefthanded) {
-      controller2.addEventListener("squeezestart", onToSqueezeStart);
+
+    if (righthanded) {
+      controller0.add(this._destHand);
+      controller1.add(this._playerHand);
+    } else {
+      controller0.add(this._playerHand);
+      controller1.add(this._destHand);
+    }
+
+    // if (righthanded) {
+    //   if (!isOculusBrowser) {
+    //     controller0.add(this._destHand);
+    //     controller1.add(this._playerHand);
+    //     controller0.addEventListener("squeezestart", onToSqueezeStart);
+    //     controller1.addEventListener("squeezestart", onFromSqueezeStart);
+    //   } else {
+    //     controller0.add(this._playerHand);
+    //     controller1.add(this._destHand);
+    //     controller0.addEventListener("squeezestart", onFromSqueezeStart);
+    //     controller1.addEventListener("squeezestart", onToSqueezeStart);
+    //   }
+    // } else {
+    //   if (!isOculusBrowser) {
+    //     controller0.add(this._playerHand);
+    //     controller1.add(this._destHand);
+    //     controller0.addEventListener("squeezestart", onFromSqueezeStart);
+    //     controller1.addEventListener("squeezestart", onToSqueezeStart);
+    //   } else {
+    //     controller0.add(this._destHand);
+    //     controller1.add(this._playerHand);
+    //     controller0.addEventListener("squeezestart", onToSqueezeStart);
+    //     controller1.addEventListener("squeezestart", onFromSqueezeStart);
+    //   }
+    // }
+
+
+    if (righthanded === !isOculusBrowser) {
+      controller0.add(this._destHand);
+      controller1.add(this._playerHand);
+      controller0.addEventListener("squeezestart", onToSqueezeStart);
       controller1.addEventListener("squeezestart", onFromSqueezeStart);
     } else {
+      controller0.add(this._playerHand);
+      controller1.add(this._destHand);
+      controller0.addEventListener("squeezestart", onFromSqueezeStart);
       controller1.addEventListener("squeezestart", onToSqueezeStart);
-      controller2.addEventListener("squeezestart", onFromSqueezeStart);
     }
 
     const loader = new THREE.FontLoader();
@@ -174,8 +216,8 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
           //   tmpVec.set(-axes[2], 0, -axes[3]);
           this._destHand.getWorldDirection(cameraVec);
-        //   let z = this._destHand.getWorldDirection().z;
-        //   tmpVec.set(-axes[2] * x, 0, -axes[3] * z);
+          //   let z = this._destHand.getWorldDirection().z;
+          //   tmpVec.set(-axes[2] * x, 0, -axes[3] * z);
           // y 는 0으로 하고
           // z 도 그래로인가 ??
 
@@ -190,11 +232,11 @@ export default class SpatialControls extends THREE.EventDispatcher {
           rightVec.copy(forwardVec);
 
           rightVec.applyAxisAngle(upVec, Math.PI / 2);
-    
-          
+
+
           forwardVec.multiplyScalar(-axes[3]);
           rightVec.multiplyScalar(-axes[2]);
-    
+
           tmpVec.addVectors(forwardVec, rightVec);
 
 

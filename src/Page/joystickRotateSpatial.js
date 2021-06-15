@@ -182,6 +182,9 @@ export default function Main() {
       destMarker,
       true
     );
+
+
+    console.log(navigator)
   }
 
   function Animate() {
