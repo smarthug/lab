@@ -180,7 +180,8 @@ export default function Main() {
       controller1,
       controller2,
       destMarker,
-      true
+      true,
+      scene
     );
 
 

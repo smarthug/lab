@@ -12,7 +12,33 @@ let rightVec = new THREE.Vector3();
 let tmpVec = new THREE.Vector3();
 let directionVec = new THREE.Vector3();
 
+let tmp = new THREE.Vector3();
+
 const isOculusBrowser = /OculusBrowser/.test(navigator.userAgent);
+
+
+function TranslateHelperGeometry() {
+
+  const geometry = new THREE.BufferGeometry();
+
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 1, 1, 1], 3));
+
+  return geometry;
+
+}
+
+
+const matHelper = new THREE.MeshBasicMaterial({
+  depthTest: false,
+  depthWrite: false,
+  transparent: true,
+  side: THREE.DoubleSide,
+  fog: false,
+  toneMapped: false
+});
+
+
+
 
 export default class SpatialControls extends THREE.EventDispatcher {
   constructor(
@@ -21,7 +47,8 @@ export default class SpatialControls extends THREE.EventDispatcher {
     controller0,
     controller1,
     destMarker,
-    righthanded = true
+    righthanded = true,
+    scene
   ) {
     super();
 
@@ -74,6 +101,14 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
     // teleport distance multiply scalar
     this._multiplyScalar = 3;
+
+    this._helperLine = new THREE.Line(TranslateHelperGeometry(), matHelper);
+
+    this._helperLine2 = new THREE.Line(TranslateHelperGeometry(), matHelper)
+
+
+    scene.add(this._helperLine)
+    scene.add(this._helperLine2)
 
     const onSelectEnd = () => {
       this.teleport();
@@ -180,13 +215,13 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
     // player.getWorldQuaternion(tmpQuaternion);
 
-    // deltaLine.position.copy(playerPos);
-    // tmp.set(1e-10, 1e-10, 1e-10).add(destinationPos).sub(playerPos);
-    // deltaLine.scale.copy(tmp);
+    this._helperLine.position.copy(this._playerHandPos);
+    tmp.set(1e-10, 1e-10, 1e-10).add(this._destHandPos).sub(this._playerHandPos);
+    this._helperLine.scale.copy(tmp);
 
-    // deltaLine2.position.copy(cameraRig.position);
-    // tmp.set(1e-10, 1e-10, 1e-10).add(cameraRig.position).sub(box.position).multiplyScalar(- 1);
-    // deltaLine2.scale.copy(tmp);
+    this._helperLine2.position.copy(this._cameraRig.position);
+    tmp.set(1e-10, 1e-10, 1e-10).add(this._cameraRig.position).sub(this._destMarker.position).multiplyScalar(- 1);
+    this._helperLine2.scale.copy(tmp);
 
     ////////////////////////////////////////
     //// MODIFICATIONS FROM THREEJS EXAMPLE
@@ -208,6 +243,14 @@ export default class SpatialControls extends THREE.EventDispatcher {
         ) {
           // var didPulse = sourceXR.gamepad.hapticActuators[0].pulse(0.8, 100);
 
+          // joystick input
+          // [0,0,좌우,상하]
+          //   -1
+          // -1   1
+          //    1
+
+          // hander 테스트 ...
+
           // joystick 4 개의 값으로서부터 추출 ...
           // 이조이스틱 숫자를 보여주는 법이 뭐가 있을까 ???
           //   console.log(sourceXR.gamepad.axes)
@@ -227,27 +270,16 @@ export default class SpatialControls extends THREE.EventDispatcher {
             cameraVec.z
           );
 
-
-
           rightVec.copy(forwardVec);
 
           rightVec.applyAxisAngle(upVec, Math.PI / 2);
-
 
           forwardVec.multiplyScalar(-axes[3]);
           rightVec.multiplyScalar(-axes[2]);
 
           tmpVec.addVectors(forwardVec, rightVec);
 
-
-
           tmpVec.normalize();
-
-
-
-
-
-
 
           tmpMatrix.lookAt(centerVec, tmpVec, upVec);
 
