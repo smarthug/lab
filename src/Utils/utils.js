@@ -35,8 +35,8 @@ export function SceneSetUp(scene) {
 
     scene.background = background;
 
-    const grid = new InfiniteGridHelper(10, 100);
-    scene.add(grid);
+    // const grid = new InfiniteGridHelper(10, 100);
+    // scene.add(grid);
 
     LightSetUp(scene);
 }
@@ -48,8 +48,8 @@ function LightSetUp(scene) {
     // White directional light at half intensity shining from the top.
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     scene.add(directionalLight);
-    // const hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 4);
-    // scene.add(hemiLight);
+    const hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 4);
+    scene.add(hemiLight);
     const spotLight = new THREE.SpotLight(0xffa95c, 4);
     spotLight.position.set(-50, 350, 50);
     spotLight.castShadow = true;
