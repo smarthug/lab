@@ -16,7 +16,7 @@ export default function Main() {
   const containerRef = useRef();
   const canvasRef = useRef();
   const vrButtonConRef = useRef();
-  
+
   useEffect(() => {
     Init();
 
@@ -113,5 +113,3 @@ export default function Main() {
     </div>
   );
 }
-
-
