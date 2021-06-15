@@ -42,17 +42,16 @@ const matHelper = new THREE.MeshBasicMaterial({
 
 export default class SpatialControls extends THREE.EventDispatcher {
   constructor(
-    xr,
+    renderer,
     cameraRig,
     controller0,
     controller1,
     destMarker,
     righthanded = true,
-    scene
   ) {
     super();
 
-    this._xr = xr;
+    this._xr = renderer.xr;
 
     // player
     this._cameraRig = cameraRig;
@@ -104,11 +103,14 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
     this._helperLine = new THREE.Line(TranslateHelperGeometry(), matHelper);
 
-    this._helperLine2 = new THREE.Line(TranslateHelperGeometry(), matHelper)
+    // this._helperLine2 = new THREE.Line(TranslateHelperGeometry(), matHelper)
+    this._helperLine2 = this._helperLine.clone();
 
 
-    scene.add(this._helperLine)
-    scene.add(this._helperLine2)
+    // scene.add(this._helperLine)
+    // scene.add(this._helperLine2)
+    this._cameraRig.parent.add(this._helperLine)
+    this._cameraRig.parent.add(this._helperLine2)
 
     const onSelectEnd = () => {
       this.teleport();
