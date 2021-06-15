@@ -40,6 +40,8 @@ export * as TraceLogic from './traceLogic'
 
 // export * as ClassSpatialControls from './classSpatial'
 
-export * as Text from './textTest'
+// export * as Text from './textTest'
 
-export * as JoystickSpatial from './joystickRotateSpatial'
+export * as InteractiveGroup from './interactiveGroup'
+
+export * as JoystickSpatialControls from './joystickRotateSpatial'
