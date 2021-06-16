@@ -102,9 +102,15 @@ export default function InfiniteGridHelper( size1, size2, color, distance, axes 
 	} );
 
 
-	THREE.Mesh.call( this, geometry, material );
+	// THREE.Mesh.call( this, geometry, material );
 
-	this.frustumCulled = false;
+	// this.frustumCulled = false;
+
+	let grid = new THREE.Mesh(geometry, material);
+
+	grid.frustumCulled = false;
+
+	return grid
 
 };
 

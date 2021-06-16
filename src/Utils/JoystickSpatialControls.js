@@ -58,8 +58,6 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
     this._hander = righthanded ? "right" : "left"
 
-    // TODO: right, left handed agnostic
-    // text FROM rather than Green ball
     //a hand that represent player's position
     // 컨트롤러 그자체로 하는가 맞을까 ??
     this._playerHand = new THREE.Mesh(
@@ -67,9 +65,7 @@ export default class SpatialControls extends THREE.EventDispatcher {
       new THREE.MeshStandardMaterial({ color: "green" })
     );
     this._playerHand.position.set(0, 0.05, 0);
-    // this._playerHand.add();
 
-    // text Destination rather than Green ball
     //a hand that represent the destination to teleport
     this._destHand = new THREE.Mesh(
       new THREE.SphereBufferGeometry(0.05, 100, 100),
@@ -77,21 +73,10 @@ export default class SpatialControls extends THREE.EventDispatcher {
     );
     this._destHand.position.set(0, 0.05, 0);
 
-    // left , or right handed ???
-
-    // if (righthanded) {
-    //   controller0.add(this._playerHand);
-    //   controller1.add(this._destHand);
-    // } else {
-    //   controller1.add(this._playerHand);
-    //   controller0.add(this._destHand);
-    // }
-
     // each xr controller hand position represent player positon, teleport destination position
     this._playerHandPos = new THREE.Vector3();
     this._destHandPos = new THREE.Vector3();
 
-    //box
     //marker to show where to be teleported
     this._destMarker = destMarker;
 
@@ -200,6 +185,13 @@ export default class SpatialControls extends THREE.EventDispatcher {
         new THREE.Mesh(geometry2, new THREE.MeshNormalMaterial())
       );
     });
+
+
+    // tmpMatrix.lookAt(centerVec, tmpVec, upVec);
+    tmpMatrix.lookAt(centerVec, new THREE.Vector3(0,0,1), upVec);
+
+    tmpQuaternion.setFromRotationMatrix(tmpMatrix);
+    this._destMarker.setRotationFromQuaternion(tmpQuaternion);
   }
 
   update() {

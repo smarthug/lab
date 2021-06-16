@@ -77,6 +77,7 @@ export default function Main() {
     scene.add(destMarker);
 
     Loader("model/opaDuck.gltf", destMarker);
+    // Loader("model/scene.gltf", destMarker);
 
     Loader("model/house.gltf", scene, (obj) => {
       obj.scale.set(15, 15, 15);

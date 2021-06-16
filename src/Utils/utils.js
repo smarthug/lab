@@ -35,8 +35,8 @@ export function SceneSetUp(scene) {
 
     scene.background = background;
 
-    // const grid = new InfiniteGridHelper(10, 100);
-    // scene.add(grid);
+    const grid = new InfiniteGridHelper(10, 100);
+    scene.add(grid);
 
     LightSetUp(scene);
 }
