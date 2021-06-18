@@ -31,10 +31,10 @@
 // export * as EnemyScene from './enemyScene'
 // export * as InputStore from './inputStore'
 // export * as XRTeleport from './xrTeleport'
-export * as SpatialControls from './spatialTeleport'
+// export * as SpatialControls from './spatialTeleport'
 // export * as R3F from './convertTor3f'
 // export * as HardAsync from './hardAsync'
-export * as TraceLogic from './traceLogic'
+// export * as TraceLogic from './traceLogic'
 
 // export * as Shader from './shader'
 
@@ -44,4 +44,6 @@ export * as TraceLogic from './traceLogic'
 
 export * as InteractiveGroup from './interactiveGroup'
 
-export * as JoystickSpatialControls from './joystickRotateSpatial'
+// export * as JoystickSpatialControls from './joystickRotateSpatial'
+
+export * as NPMTest from './npmTest'
