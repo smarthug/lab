@@ -46,4 +46,6 @@ export * as InteractiveGroup from './interactiveGroup'
 
 // export * as JoystickSpatialControls from './joystickRotateSpatial'
 
-export * as NPMTest from './npmTest'
+// export * as NPMTest from './npmTest'
+
+export * as DatGuiSpatial from './spatialWithDatgui'
