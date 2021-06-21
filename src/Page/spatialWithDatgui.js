@@ -7,7 +7,8 @@ import { XRControllerModelFactory } from "three/examples/jsm/webxr/XRControllerM
 import { resizer, SceneSetUp } from "../Utils/utils";
 import Loader from "../Utils/loader";
 
-import SpatialControls from "../Utils/JoystickSpatialControls";
+// import SpatialControls from "../Utils/JoystickSpatialControls";
+import SpatialControls from "../Utils/methodSpatialControls";
 
 import { InteractiveGroup } from './testGroup'
 // import { InteractiveGroup } from 'three/examples/jsm/interactive/InteractiveGroup'
@@ -25,7 +26,8 @@ const parameters = {
     tubularSegments: 150,
     radialSegments: 20,
     p: 2,
-    q: 3
+    q: 3,
+    multiplyScalar : 3
 };
 
 export default function Main() {
@@ -110,6 +112,8 @@ export default function Main() {
 
         }
 
+        
+
         const gui = new GUI({ width: 300 });
         gui.add(parameters, 'radius', 0.0, 1.0).onChange(onChange);
         gui.add(parameters, 'tube', 0.0, 1.0).onChange(onChange);
@@ -117,17 +121,20 @@ export default function Main() {
         gui.add(parameters, 'radialSegments', 2, 20, 1).onChange(onChange);
         gui.add(parameters, 'p', 1, 10, 1).onChange(onChange);
         gui.add(parameters, 'q', 0, 10, 1).onChange(onChange);
+        gui.add(parameters, "multiplyScalar", 1,100,1).onChange(setTeleportDistance)
         // gui.add(custom, 'hosuk')
         gui.domElement.style.visibility = 'hidden';
+        // gui.domElement.style.opacity = '0.5';
 
 
         const group = new InteractiveGroup(renderer, camera);
-        scene.add(group);
+        // scene.add(group);
+        cameraRig.add(group);
 
         const mesh = new HTMLMesh(gui.domElement);
         mesh.position.x = - 0.75;
         mesh.position.y = 1.5;
-        mesh.position.z = - 0.5;
+        mesh.position.z = - 2.5;
         mesh.rotation.y = Math.PI / 4;
         mesh.scale.setScalar(8);
         group.add(mesh);
@@ -140,6 +147,12 @@ export default function Main() {
             destMarker,
             true,
         );
+
+
+        function setTeleportDistance(value){
+            console.log(value);
+            spatialControls.setDistance(value);
+        }
     }
 
     function Animate() {

@@ -14,7 +14,8 @@ class HTMLMesh extends Mesh {
 		const texture = new HTMLTexture( dom );
 
 		const geometry = new PlaneGeometry( texture.image.width * 0.001, texture.image.height * 0.001 );
-		const material = new MeshBasicMaterial( { map: texture, toneMapped: false } );
+		// const material = new MeshBasicMaterial( { map: texture, toneMapped: false } );
+		const material = new MeshBasicMaterial( { map: texture, toneMapped: false , opacity:0.7, transparent:true} );
 
 		super( geometry, material );
 
@@ -266,7 +267,7 @@ function html2canvas( element ) {
 }
 
 function htmlevent( element, event, x, y ) {
-    console.log(element, event, x,y)
+    // console.log(element, event, x,y)
 
 	const mouseEventInit = {
 		clientX: ( x * element.offsetWidth ) + element.offsetLeft,
