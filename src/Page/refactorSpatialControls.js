@@ -22,12 +22,12 @@ let scene, camera, renderer
 let spatialControls;
 
 const parameters = {
-    radius: 0.5,
-    tube: 0.2,
-    tubularSegments: 150,
-    radialSegments: 20,
-    p: 2,
-    q: 3,
+    not: 0.5,
+    implemented: 0.2,
+    yet: 150,
+    // radialSegments: 20,
+    // p: 2,
+    // q: 3,
     multiplyScalar: 3,
     handsChange: ()=>{}
 };
@@ -146,12 +146,12 @@ export default function Main() {
 
         const gui = new GUI({ width: 300 });
         let DXFolder = gui.addFolder("Design Express")
-        DXFolder.add(parameters, 'radius', 0.0, 1.0).onChange(onChange);
-        DXFolder.add(parameters, 'tube', 0.0, 1.0).onChange(onChange);
-        DXFolder.add(parameters, 'tubularSegments', 10, 150, 1).onChange(onChange);
-        DXFolder.add(parameters, 'radialSegments', 2, 20, 1).onChange(onChange);
-        DXFolder.add(parameters, 'p', 1, 10, 1).onChange(onChange);
-        DXFolder.add(parameters, 'q', 0, 10, 1).onChange(onChange);
+        DXFolder.add(parameters, 'not', 0.0, 1.0).onChange(onChange);
+        DXFolder.add(parameters, 'implemented', 0.0, 1.0).onChange(onChange);
+        DXFolder.add(parameters, 'yet', 10, 150, 1).onChange(onChange);
+        // DXFolder.add(parameters, 'radialSegments', 2, 20, 1).onChange(onChange);
+        // DXFolder.add(parameters, 'p', 1, 10, 1).onChange(onChange);
+        // DXFolder.add(parameters, 'q', 0, 10, 1).onChange(onChange);
         DXFolder.open()
         let ControlFolder = gui.addFolder("ControlsSettings")
 
