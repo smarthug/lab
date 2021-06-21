@@ -49,6 +49,9 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
         this._xr = renderer.xr;
 
+        this._controller0 = controller0;
+        this._controller1 = controller1;
+
         // player
         this._cameraRig = cameraRig;
 
@@ -102,32 +105,36 @@ export default class SpatialControls extends THREE.EventDispatcher {
         this._cameraRig.parent.add(this._helperLine)
         this._cameraRig.parent.add(this._helperLine2)
 
-        const onSelectEnd = () => {
+        this.onSelectEnd = () => {
             this.teleport();
         };
 
-        const onFromSqueezeStart = () => {
+        this.onFromSqueezeStart = () => {
             this._multiplyScalar *= 0.5;
         };
 
-        const onToSqueezeStart = () => {
+        this.onToSqueezeStart = () => {
             this._multiplyScalar *= 2;
         };
 
-        controller0.addEventListener("selectend", onSelectEnd);
-        controller1.addEventListener("selectend", onSelectEnd);
 
-        if (rightHanded === !isOculusBrowser) {
-            controller0.add(this._destHand);
-            controller1.add(this._playerHand);
-            controller0.addEventListener("squeezestart", onToSqueezeStart);
-            controller1.addEventListener("squeezestart", onFromSqueezeStart);
-        } else {
-            controller0.add(this._playerHand);
-            controller1.add(this._destHand);
-            controller0.addEventListener("squeezestart", onFromSqueezeStart);
-            controller1.addEventListener("squeezestart", onToSqueezeStart);
-        }
+
+
+        // if (rightHanded === !isOculusBrowser) {
+        //     controller0.add(this._destHand);
+        //     controller1.add(this._playerHand);
+        //     controller0.addEventListener("squeezestart", onToSqueezeStart);
+        //     controller1.addEventListener("squeezestart", onFromSqueezeStart);
+        //     controller0.addEventListener("selectend", onSelectEnd);
+        // } else {
+        //     controller0.add(this._playerHand);
+        //     controller1.add(this._destHand);
+        //     controller0.addEventListener("squeezestart", onFromSqueezeStart);
+        //     controller1.addEventListener("squeezestart", onToSqueezeStart);
+        //     controller1.addEventListener("selectend", onSelectEnd);
+        // }
+
+        this.handsInit(rightHanded);
 
         tmpMatrix.lookAt(centerVec, new THREE.Vector3(0, 0, 1), upVec);
 
@@ -225,4 +232,57 @@ export default class SpatialControls extends THREE.EventDispatcher {
     setDistance(value) {
         this._multiplyScalar = value;
     }
+
+    handsInit(rightHanded) {
+        // 초기화 first 
+        // 
+
+        this._hander = rightHanded ? "right" : "left";
+
+        this._controller0.removeEventListener("squeezestart", this.onToSqueezeStart) 
+        this._controller0.removeEventListener("squeezestart", this.onFromSqueezeStart) 
+        this._controller0.removeEventListener("selectend", this.onSelectEnd) 
+        // this._controller1
+        this._controller1.removeEventListener("squeezestart", this.onToSqueezeStart) 
+        this._controller1.removeEventListener("squeezestart", this.onFromSqueezeStart) 
+        this._controller1.removeEventListener("selectend", this.onSelectEnd) 
+
+        if (rightHanded === !isOculusBrowser) {
+            this._controller0.add(this._destHand);
+            this._controller1.add(this._playerHand);
+            this._controller0.addEventListener("squeezestart", this.onToSqueezeStart);
+            this._controller1.addEventListener("squeezestart", this.onFromSqueezeStart);
+            this._controller0.addEventListener("selectend", this.onSelectEnd);
+        } else {
+            this._controller0.add(this._playerHand);
+            this._controller1.add(this._destHand);
+            this._controller0.addEventListener("squeezestart", this.onFromSqueezeStart);
+            this._controller1.addEventListener("squeezestart", this.onToSqueezeStart);
+            this._controller1.addEventListener("selectend", this.onSelectEnd);
+        }
+
+    }
+
+
+    // onSelectEnd() {
+    //     this.teleport();
+    // }
+    // onFromSqueezeStart() {
+    //     this._multiplyScalar *= 0.5;
+    // }
+
+    // onToSqueezeStart() {
+    //     this._multiplyScalar *= 2;
+    // }
+
+    //     const onFromSqueezeStart = () => {
+    //         this._multiplyScalar *= 0.5;
+    //     };
+
+    //     const onToSqueezeStart = () => {
+    //         this._multiplyScalar *= 2;
+    //     };
 }
+
+
+

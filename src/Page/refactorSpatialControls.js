@@ -13,9 +13,9 @@ import SpatialControls from '../Utils/refactoredSpatialControls'
 
 
 // import { InteractiveGroup } from './testGroup'
+// import { HTMLMesh } from './testHTML'
 import { InteractiveGroup } from 'three/examples/jsm/interactive/InteractiveGroup'
 import { HTMLMesh } from 'three/examples/jsm/interactive/HTMLMesh'
-// import { HTMLMesh } from './testHTML'
 import { GUI } from 'dat.gui'
 
 let scene, camera, renderer
@@ -28,8 +28,11 @@ const parameters = {
     radialSegments: 20,
     p: 2,
     q: 3,
-    multiplyScalar: 3
+    multiplyScalar: 3,
+    handsChange: ()=>{}
 };
+
+let rightHanded = true
 
 export default function Main() {
     const containerRef = useRef();
@@ -149,6 +152,7 @@ export default function Main() {
         gui.add(parameters, 'p', 1, 10, 1).onChange(onChange);
         gui.add(parameters, 'q', 0, 10, 1).onChange(onChange);
         gui.add(parameters, "multiplyScalar", 1, 100, 1).onChange(setTeleportDistance)
+        gui.add(parameters, "handsChange").onChange(fireHandsChange)
         // gui.add(custom, 'hosuk')
         gui.domElement.style.visibility = 'hidden';
         // gui.domElement.style.opacity = '0.5';
@@ -184,6 +188,14 @@ export default function Main() {
         function setTeleportDistance(value) {
             console.log(value);
             spatialControls.setDistance(value);
+        }
+
+        function fireHandsChange(){
+            // console.log("test")
+            // spatialControls.handsInit(false);
+            // rightHanded = !rightHanded
+            let tmp = spatialControls._hander === "right" ? true : false;
+            spatialControls.handsInit(!tmp);
         }
     }
 
