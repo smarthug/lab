@@ -49,3 +49,5 @@ export * as InteractiveGroup from './interactiveGroup'
 // export * as NPMTest from './npmTest'
 
 export * as DatGuiSpatial from './spatialWithDatgui'
+
+export * as RefactorSpatial from './refactorSpatialControls'
