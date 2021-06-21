@@ -13,9 +13,9 @@ import SpatialControls from '../Utils/refactoredSpatialControls'
 
 
 // import { InteractiveGroup } from './testGroup'
-// import { HTMLMesh } from './testHTML'
+import { HTMLMesh } from './testHTML'
 import { InteractiveGroup } from 'three/examples/jsm/interactive/InteractiveGroup'
-import { HTMLMesh } from 'three/examples/jsm/interactive/HTMLMesh'
+// import { HTMLMesh } from 'three/examples/jsm/interactive/HTMLMesh'
 import { GUI } from 'dat.gui'
 
 let scene, camera, renderer
@@ -145,14 +145,19 @@ export default function Main() {
 
 
         const gui = new GUI({ width: 300 });
-        gui.add(parameters, 'radius', 0.0, 1.0).onChange(onChange);
-        gui.add(parameters, 'tube', 0.0, 1.0).onChange(onChange);
-        gui.add(parameters, 'tubularSegments', 10, 150, 1).onChange(onChange);
-        gui.add(parameters, 'radialSegments', 2, 20, 1).onChange(onChange);
-        gui.add(parameters, 'p', 1, 10, 1).onChange(onChange);
-        gui.add(parameters, 'q', 0, 10, 1).onChange(onChange);
-        gui.add(parameters, "multiplyScalar", 1, 100, 1).onChange(setTeleportDistance)
-        gui.add(parameters, "handsChange").onChange(fireHandsChange)
+        let DXFolder = gui.addFolder("Design Express")
+        DXFolder.add(parameters, 'radius', 0.0, 1.0).onChange(onChange);
+        DXFolder.add(parameters, 'tube', 0.0, 1.0).onChange(onChange);
+        DXFolder.add(parameters, 'tubularSegments', 10, 150, 1).onChange(onChange);
+        DXFolder.add(parameters, 'radialSegments', 2, 20, 1).onChange(onChange);
+        DXFolder.add(parameters, 'p', 1, 10, 1).onChange(onChange);
+        DXFolder.add(parameters, 'q', 0, 10, 1).onChange(onChange);
+        DXFolder.open()
+        let ControlFolder = gui.addFolder("ControlsSettings")
+
+        ControlFolder.add(parameters, "multiplyScalar", 1, 100, 1).onChange(setTeleportDistance)
+        ControlFolder.add(parameters, "handsChange").onChange(fireHandsChange)
+        ControlFolder.open();
         // gui.add(custom, 'hosuk')
         gui.domElement.style.visibility = 'hidden';
         // gui.domElement.style.opacity = '0.5';
