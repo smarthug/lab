@@ -239,26 +239,36 @@ export default class SpatialControls extends THREE.EventDispatcher {
 
         this._hander = rightHanded ? "right" : "left";
 
-        this._controller0.removeEventListener("squeezestart", this.onToSqueezeStart) 
-        this._controller0.removeEventListener("squeezestart", this.onFromSqueezeStart) 
-        this._controller0.removeEventListener("selectend", this.onSelectEnd) 
+        this._controller0.removeEventListener("squeezestart", this.onToSqueezeStart)
+        this._controller0.removeEventListener("squeezestart", this.onFromSqueezeStart)
+        this._controller0.removeEventListener("selectend", this.onSelectEnd)
         // this._controller1
-        this._controller1.removeEventListener("squeezestart", this.onToSqueezeStart) 
-        this._controller1.removeEventListener("squeezestart", this.onFromSqueezeStart) 
-        this._controller1.removeEventListener("selectend", this.onSelectEnd) 
+        this._controller1.removeEventListener("squeezestart", this.onToSqueezeStart)
+        this._controller1.removeEventListener("squeezestart", this.onFromSqueezeStart)
+        this._controller1.removeEventListener("selectend", this.onSelectEnd)
+
+
+        this._controller0.removeEventListener("squeezeend", this.onSelectEnd);
+        this._controller1.removeEventListener("squeezeend", this.onSelectEnd);
 
         if (rightHanded === !isOculusBrowser) {
             this._controller0.add(this._destHand);
             this._controller1.add(this._playerHand);
-            this._controller0.addEventListener("squeezestart", this.onToSqueezeStart);
-            this._controller1.addEventListener("squeezestart", this.onFromSqueezeStart);
-            this._controller0.addEventListener("selectend", this.onSelectEnd);
+            // this._controller0.addEventListener("squeezestart", this.onToSqueezeStart);
+            // this._controller1.addEventListener("squeezestart", this.onFromSqueezeStart);
+            // this._controller0.addEventListener("selectend", this.onSelectEnd);
+
+            this._controller0.addEventListener("squeezeend", this.onSelectEnd);
+            this._controller1.addEventListener("squeezeend", this.onSelectEnd);
         } else {
             this._controller0.add(this._playerHand);
             this._controller1.add(this._destHand);
-            this._controller0.addEventListener("squeezestart", this.onFromSqueezeStart);
-            this._controller1.addEventListener("squeezestart", this.onToSqueezeStart);
-            this._controller1.addEventListener("selectend", this.onSelectEnd);
+            // this._controller0.addEventListener("squeezestart", this.onFromSqueezeStart);
+            // this._controller1.addEventListener("squeezestart", this.onToSqueezeStart);
+            // this._controller1.addEventListener("selectend", this.onSelectEnd);
+
+            this._controller0.addEventListener("squeezeend", this.onSelectEnd);
+            this._controller1.addEventListener("squeezeend", this.onSelectEnd);
         }
 
     }
