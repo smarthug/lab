@@ -104,11 +104,30 @@ export default function Main() {
         Loader("model/opaDuck.gltf", destMarker);
         // Loader("model/scene.gltf", destMarker);
 
-        Loader("model/house.gltf", scene, (obj) => {
-            obj.scale.set(15, 15, 15);
-            obj.position.set(0, 0, -10);
-        });
+        // Loader("model/house.gltf", scene, (obj) => {
+        //     obj.scale.set(15, 15, 15);
+        //     obj.position.set(0, 0, -10);
+        // });
 
+        // Loader("model/LittlestTokyo.glb", scene, (obj) => {
+        //     // obj.scale.set(15, 15, 15);
+        //     // obj.position.set(0, 0, -1000);
+        //     obj.position.set( 1, 1, 0 );
+		// 		obj.scale.set( 0.01, 0.01, 0.01 );
+        // });
+
+
+        // Loader("model/LittlestTokyo.glb", scene, (obj) => {
+        //     // obj.scale.set(15, 15, 15);
+        //     // obj.position.set(0, 0, -1000);
+        //     obj.position.set( 1, 1, 0 );
+		// 		obj.scale.set( 0.01, 0.01, 0.01 );
+        // });
+
+        Loader("model/Tallskyscrapers2.glb", scene, (obj) => {
+            obj.scale.multiplyScalar(1000)
+            obj.position.set(0,0,-100)
+        });
 
         const loader = new THREE.FontLoader();
 

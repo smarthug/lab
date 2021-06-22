@@ -50,8 +50,8 @@ function LightSetUp(scene) {
     scene.add(directionalLight);
     const hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 4);
     scene.add(hemiLight);
-    const spotLight = new THREE.SpotLight(0xffa95c, 4);
-    spotLight.position.set(-50, 350, 50);
-    spotLight.castShadow = true;
+    // const spotLight = new THREE.SpotLight(0xffa95c, 4);
+    // spotLight.position.set(-50, 350, 50);
+    // spotLight.castShadow = true;
     // scene.add(spotLight);
 }
