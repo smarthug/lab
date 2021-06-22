@@ -127,7 +127,7 @@ export default function Main() {
 
         Loader("model/Tallskyscrapers2.glb", scene, (obj) => {
             obj.scale.multiplyScalar(1000)
-            obj.position.set(0,200,-100)
+            obj.position.set(0,0,-100)
             
         });
 
