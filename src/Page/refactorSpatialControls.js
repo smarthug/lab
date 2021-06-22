@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
 import { XRControllerModelFactory } from "three/examples/jsm/webxr/XRControllerModelFactory.js";
 
-import { resizer, SceneSetUp } from "../Utils/utils";
+import { resizer, SceneSetUp, updateEnvironment } from "../Utils/utils";
 import Loader from "../Utils/loader";
 
 // import SpatialControls from 'three-spatial-controls'
@@ -81,6 +81,7 @@ export default function Main() {
 
         // cameraRig.position.set(0, 0, 5);
         SceneSetUp(scene);
+        updateEnvironment(scene,renderer)
         window.addEventListener("resize", () => resizer(camera, renderer));
 
         const controllerModelFactory = new XRControllerModelFactory();
@@ -126,7 +127,13 @@ export default function Main() {
 
         Loader("model/Tallskyscrapers2.glb", scene, (obj) => {
             obj.scale.multiplyScalar(1000)
-            obj.position.set(0,0,-100)
+            obj.position.set(0,200,-100)
+            
+        });
+
+        Loader("model/Tallskyscrapers5.glb", scene, (obj) => {
+            obj.scale.multiplyScalar(100)
+            obj.position.set(0,0,-10)
         });
 
         const loader = new THREE.FontLoader();
