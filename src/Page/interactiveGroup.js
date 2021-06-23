@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 
 import CameraControls from "camera-controls";
-import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+// import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 
 import { resizer, SceneSetUp } from '../Utils/utils'
 
@@ -14,7 +14,7 @@ import { GUI } from 'dat.gui'
 
 import { XRControllerModelFactory } from "three/examples/jsm/webxr/XRControllerModelFactory.js";
 
-import { Slider } from '@material-ui/core'
+import { Slider, Button } from '@material-ui/core'
 
 CameraControls.install({ THREE: THREE });
 
@@ -40,7 +40,9 @@ export default function Main() {
     const canvasRef = useRef();
     const vrButtonConRef = useRef();
     const testRef = useRef();
-    useEffect(() => {
+    const buttonRef = useRef();
+
+    useLayoutEffect(() => {
         Init();
         // Animate();
 
@@ -73,7 +75,7 @@ export default function Main() {
         cameraControls = new CameraControls(camera, renderer.domElement);
 
 
-        vrButtonConRef.current.appendChild(VRButton.createButton(renderer));
+        // vrButtonConRef.current.appendChild(VRButton.createButton(renderer));
 
         renderer.setAnimationLoop(Animate);
 
@@ -126,13 +128,13 @@ export default function Main() {
         const group = new InteractiveGroup(renderer, camera);
         scene.add(group);
 
-        var button = document.createElement('button');
-        button.innerHTML = 'click me';
-        button.onclick = function () {
-            alert('here be dragons'); return false;
-        };
+        // var button = document.createElement('button');
+        // button.innerHTML = 'click me';
+        // button.onclick = function () {
+        //     alert('here be dragons'); return false;
+        // };
 
-        testRef.current.appendChild(button)
+        // testRef.current.appendChild(button)
 
         var slider = document.getElementById("myRange");
         // var output = document.getElementById("demo");
@@ -140,7 +142,7 @@ export default function Main() {
 
         // Update the current slider value (each time you drag the slider handle)
         // slider.oninput = function () {
-            // output.innerHTML = this.value;
+        // output.innerHTML = this.value;
         // }
 
         // const mesh = new HTMLMesh(gui.domElement);
@@ -151,6 +153,18 @@ export default function Main() {
         mesh.rotation.y = Math.PI / 4;
         mesh.scale.setScalar(8);
         group.add(mesh);
+
+        buttonRef.current.addEventListener("click", (e) => {
+            console.log("clicked test");
+            console.log(e)
+            // 역시 예측한대로 bubbles 가 false 임 ...
+            // react events 는 버블링에 의존적 ... 
+            // buttonRef.current.click();
+        })
+        console.log(buttonRef.current)
+        // buttonRef.current.click();
+        // buttonRef.current.dispatchEvent( new MouseEvent( event, mouseEventInit ) );
+        // buttonRef.current.dispatchEvent( new MouseEvent( "click", {bubbles:true} ) );
     }
 
     function Animate() {
@@ -162,7 +176,14 @@ export default function Main() {
 
         renderer.render(scene, camera);
     }
-
+    const handleClick = (e) => {
+        console.log(e)
+        console.log("infinite?")
+        e.nativeEvent.stopPropagation();
+        e.nativeEvent.preventDefault();
+        e.nativeEvent.stopImmediatePropagation();
+        // Event.stopImmediatePropagation()
+    }
     return (
         <div style={{
             height: "100vh",
@@ -177,7 +198,8 @@ export default function Main() {
                 </div>
                 <h1 style={{ color: "white" }}>Hello</h1>
                 <Slider aria-labelledby="continuous-slider" />
-                <button onClick={() => alert("hello world")}>test</button>
+                <button ref={buttonRef} onClick={handleClick}>test</button>
+                <Button color={"primary"} onClick={handleClick}>TEST</Button>
             </div>
             <canvas ref={canvasRef} />
             <div ref={vrButtonConRef}></div>

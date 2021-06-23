@@ -269,7 +269,14 @@ function html2canvas( element ) {
 function htmlevent( element, event, x, y ) {
     // console.log(element, event, x,y)
 
+	// const mouseEventInit = {
+	// 	clientX: ( x * element.offsetWidth ) + element.offsetLeft,
+	// 	clientY: ( y * element.offsetHeight ) + element.offsetTop,
+	// 	view: element.ownerDocument.defaultView
+	// };
+
 	const mouseEventInit = {
+		bubbles:true,
 		clientX: ( x * element.offsetWidth ) + element.offsetLeft,
 		clientY: ( y * element.offsetHeight ) + element.offsetTop,
 		view: element.ownerDocument.defaultView
