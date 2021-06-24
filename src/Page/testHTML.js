@@ -1,3 +1,4 @@
+import React from 'react'
 import {
 	CanvasTexture,
 	LinearFilter,
@@ -276,7 +277,8 @@ function htmlevent( element, event, x, y ) {
 	// };
 
 	const mouseEventInit = {
-		bubbles:true,
+		// bubbles:true,
+		cancelable:true,
 		clientX: ( x * element.offsetWidth ) + element.offsetLeft,
 		clientY: ( y * element.offsetHeight ) + element.offsetTop,
 		view: element.ownerDocument.defaultView
@@ -297,8 +299,12 @@ function htmlevent( element, event, x, y ) {
 
 			if ( x > rect.left && x < rect.right && y > rect.top && y < rect.bottom ) {
 
-				element.dispatchEvent( new MouseEvent( event, mouseEventInit ) );
+				// element.dispatchEvent( new React.MouseEvent( event, mouseEventInit ) );
+				// element.dispatchEvent( new MouseEvent( event, mouseEventInit ) );
+				if(event==="click"){
 
+					element.click();
+				}
 			}
 
 			for ( var i = 0; i < element.childNodes.length; i ++ ) {

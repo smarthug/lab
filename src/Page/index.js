@@ -51,3 +51,5 @@ export * as InteractiveGroup from './interactiveGroup'
 export * as DatGuiSpatial from './spatialWithDatgui'
 
 export * as RefactorSpatial from './refactorSpatialControls'
+
+export * as ControlsAndSpatial from './controlsAndSpatial'
