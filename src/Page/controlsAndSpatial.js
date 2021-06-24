@@ -173,7 +173,7 @@ export default function Main() {
     const handleClick = (e) => {
         console.log(e)
 
-         interactiveGroup = new InteractiveGroup(renderer, camera);
+        interactiveGroup = new InteractiveGroup(renderer, camera);
         scene.add(interactiveGroup);
 
         // var button = document.createElement('button');
@@ -200,13 +200,32 @@ export default function Main() {
         // e.nativeEvent.stopImmediatePropagation();
         // Event.stopImmediatePropagation()
 
-        // document.getElementById("VRButton").click();
+        document.getElementById("VRButton").click();
     }
 
-    const handleExit = () => {
-        interactiveGroup.dispose();
-        scene.remove(interactiveGroup)
-        cameraControls = new CameraControls(camera, renderer.domElement);
+    const handleExit = async () => {
+        // const session = this._xr.getSession();
+        // if (session) {
+        // const session = renderer.xr.getSession();
+        // session.end();
+        // await document.getElementById("VRButton").click();
+
+        // setTimeout(() => {
+
+            
+        // },2000)
+
+        // 아하 ! 비동기이구나 !!!!
+
+
+        const session = renderer.xr.getSession();
+        session.end().then(()=>{
+            interactiveGroup.dispose();
+    
+            scene.remove(interactiveGroup)
+    
+            cameraControls = new CameraControls(camera, renderer.domElement);
+        });
     }
     return (
         <div style={{
@@ -215,13 +234,13 @@ export default function Main() {
             overflowY: "hidden",
         }}
             ref={containerRef}
-        >   
-        <div ref={testRef} style={{position:"absolute"}}>
-            <button onClick={handleClick}>TEST</button>
-            <button onClick={handleExit}>EXIT</button>
-            <Button disableRipple={true} onClick={handleClick}  color="secondary" variant="outlined">XR</Button>
-        </div>
-            
+        >
+            <div ref={testRef} style={{ position: "absolute" }}>
+                <button onClick={handleClick}>TEST</button>
+                <button onClick={handleExit}>EXIT</button>
+                <Button disableRipple={true} onClick={handleClick} color="secondary" variant="outlined">XR</Button>
+            </div>
+
             <canvas ref={canvasRef} />
             <div ref={vrButtonConRef}></div>
         </div>
