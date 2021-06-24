@@ -23,6 +23,8 @@ class InteractiveGroup extends Group {
 
 		const element = renderer.domElement;
 
+		this.element = element;
+
 		function onPointerEvent( event ) {
 
 			event.stopPropagation();
@@ -50,6 +52,8 @@ class InteractiveGroup extends Group {
 			}
 
 		}
+
+		this.onPointerEvent = onPointerEvent;
 
 		element.addEventListener( 'pointerdown', onPointerEvent );
 		element.addEventListener( 'pointerup', onPointerEvent );
@@ -108,6 +112,16 @@ class InteractiveGroup extends Group {
 		controller2.addEventListener( 'selectstart', onXRControllerEvent );
 		controller2.addEventListener( 'selectend', onXRControllerEvent );
 
+	}
+
+	dispose(){
+		this.element.removeEventListener( 'pointerdown', this.onPointerEvent );
+		this.element.removeEventListener( 'pointerup', this.onPointerEvent );
+		this.element.removeEventListener( 'pointermove', this.onPointerEvent );
+		this.element.removeEventListener( 'mousedown', this.onPointerEvent );
+		this.element.removeEventListener( 'mouseup', this.onPointerEvent );
+		this.element.removeEventListener( 'mousemove', this.onPointerEvent );
+		this.element.removeEventListener( 'click', this.onPointerEvent );
 	}
 
 }

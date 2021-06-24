@@ -21,6 +21,8 @@ CameraControls.install({ THREE: THREE });
 let cube, scene, camera, renderer, cameraControls;
 const clock = new THREE.Clock();
 
+let interactiveGroup;
+
 
 const parameters = {
     radius: 0.5,
@@ -125,25 +127,25 @@ export default function Main() {
         gui.add(custom, 'hosuk')
         gui.domElement.style.visibility = 'hidden';
 
-        const group = new InteractiveGroup(renderer, camera);
-        scene.add(group);
+        // const group = new InteractiveGroup(renderer, camera);
+        // scene.add(group);
 
-        var button = document.createElement('button');
-        button.innerHTML = 'click me';
-        button.onclick = function (e) {
-            console.log(e); return false;
-        };
+        // // var button = document.createElement('button');
+        // // button.innerHTML = 'click me';
+        // // button.onclick = function (e) {
+        // //     console.log(e); return false;
+        // // };
 
-        testRef.current.appendChild(button)
+        // // testRef.current.appendChild(button)
 
-        // const mesh = new HTMLMesh(gui.domElement);
-        const mesh = new HTMLMesh(testRef.current);
-        mesh.position.x = - 0.75;
-        mesh.position.y = 1.5;
-        mesh.position.z = - 0.5;
-        mesh.rotation.y = Math.PI / 4;
-        mesh.scale.setScalar(8);
-        group.add(mesh);
+        // // const mesh = new HTMLMesh(gui.domElement);
+        // const mesh = new HTMLMesh(testRef.current);
+        // mesh.position.x = - 0.75;
+        // mesh.position.y = 1.5;
+        // mesh.position.z = - 0.5;
+        // mesh.rotation.y = Math.PI / 4;
+        // mesh.scale.setScalar(8);
+        // group.add(mesh);
         // scene.add(mesh);
 
         // buttonRef.current.addEventListener("click", (e) => {
@@ -170,6 +172,28 @@ export default function Main() {
     }
     const handleClick = (e) => {
         console.log(e)
+
+         interactiveGroup = new InteractiveGroup(renderer, camera);
+        scene.add(interactiveGroup);
+
+        // var button = document.createElement('button');
+        // button.innerHTML = 'click me';
+        // button.onclick = function (e) {
+        //     console.log(e); return false;
+        // };
+
+        // testRef.current.appendChild(button)
+
+        // const mesh = new HTMLMesh(gui.domElement);
+        const mesh = new HTMLMesh(testRef.current);
+        mesh.position.x = - 0.75;
+        mesh.position.y = 1.5;
+        mesh.position.z = - 0.5;
+        mesh.rotation.y = Math.PI / 4;
+        mesh.scale.setScalar(8);
+        interactiveGroup.add(mesh);
+
+
         // console.log("infinite?")
         // e.nativeEvent.stopPropagation();
         // e.nativeEvent.preventDefault();
@@ -177,6 +201,12 @@ export default function Main() {
         // Event.stopImmediatePropagation()
 
         // document.getElementById("VRButton").click();
+    }
+
+    const handleExit = () => {
+        interactiveGroup.dispose();
+        scene.remove(interactiveGroup)
+        cameraControls = new CameraControls(camera, renderer.domElement);
     }
     return (
         <div style={{
@@ -188,6 +218,7 @@ export default function Main() {
         >   
         <div ref={testRef} style={{position:"absolute"}}>
             <button onClick={handleClick}>TEST</button>
+            <button onClick={handleExit}>EXIT</button>
             <Button disableRipple={true} onClick={handleClick}  color="secondary" variant="outlined">XR</Button>
         </div>
             
