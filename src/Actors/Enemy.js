@@ -38,8 +38,8 @@ export default class Enemy extends Actor {
         // console.log(this.position)
         tmpVec.subVectors(player.position, this.position);
         // console.log(tmpVec)
-        // tmpVec.normalize();
-        tmpVec.multiplyScalar(0.01)
+        tmpVec.normalize();
+        tmpVec.multiplyScalar(0.03)
         this.position.add(tmpVec)
     }
 

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 
 import CameraControls from "camera-controls";
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
@@ -7,12 +7,14 @@ import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 import { resizer, SceneSetUp } from '../Utils/utils'
 
 import { InteractiveGroup } from './testGroup'
+// import { InteractiveGroup } from 'three/examples/jsm/interactive/InteractiveGroup'
+// import { HTMLMesh } from 'three/examples/jsm/interactive/HTMLMesh'
 import { HTMLMesh } from './testHTML'
 import { GUI } from 'dat.gui'
 
 import { XRControllerModelFactory } from "three/examples/jsm/webxr/XRControllerModelFactory.js";
 
-import { Button } from '@material-ui/core'
+import { Slider, Button } from '@material-ui/core'
 
 CameraControls.install({ THREE: THREE });
 
@@ -40,6 +42,7 @@ export default function Main() {
     const canvasRef = useRef();
     const vrButtonConRef = useRef();
     const testRef = useRef();
+    const buttonRef = useRef();
 
     useLayoutEffect(() => {
         Init();
@@ -124,6 +127,38 @@ export default function Main() {
         gui.add(custom, 'hosuk')
         gui.domElement.style.visibility = 'hidden';
 
+        // const group = new InteractiveGroup(renderer, camera);
+        // scene.add(group);
+
+        // // var button = document.createElement('button');
+        // // button.innerHTML = 'click me';
+        // // button.onclick = function (e) {
+        // //     console.log(e); return false;
+        // // };
+
+        // // testRef.current.appendChild(button)
+
+        // // const mesh = new HTMLMesh(gui.domElement);
+        // const mesh = new HTMLMesh(testRef.current);
+        // mesh.position.x = - 0.75;
+        // mesh.position.y = 1.5;
+        // mesh.position.z = - 0.5;
+        // mesh.rotation.y = Math.PI / 4;
+        // mesh.scale.setScalar(8);
+        // group.add(mesh);
+        // scene.add(mesh);
+
+        // buttonRef.current.addEventListener("click", (e) => {
+        //     console.log("clicked test");
+        //     console.log(e)
+        //     // 역시 예측한대로 bubbles 가 false 임 ...
+        //     // react events 는 버블링에 의존적 ... 
+        //     // buttonRef.current.click();
+        // })
+        // console.log(buttonRef.current)
+        // buttonRef.current.click();
+        // buttonRef.current.dispatchEvent( new MouseEvent( event, mouseEventInit ) );
+        // buttonRef.current.dispatchEvent( new MouseEvent( "click", {bubbles:true} ) );
     }
 
     function Animate() {
@@ -141,6 +176,15 @@ export default function Main() {
         interactiveGroup = new InteractiveGroup(renderer, camera);
         scene.add(interactiveGroup);
 
+        // var button = document.createElement('button');
+        // button.innerHTML = 'click me';
+        // button.onclick = function (e) {
+        //     console.log(e); return false;
+        // };
+
+        // testRef.current.appendChild(button)
+
+        // const mesh = new HTMLMesh(gui.domElement);
         const mesh = new HTMLMesh(testRef.current);
         mesh.position.x = - 0.75;
         mesh.position.y = 1.5;
@@ -149,11 +193,30 @@ export default function Main() {
         mesh.scale.setScalar(8);
         interactiveGroup.add(mesh);
 
+
+        // console.log("infinite?")
+        // e.nativeEvent.stopPropagation();
+        // e.nativeEvent.preventDefault();
+        // e.nativeEvent.stopImmediatePropagation();
+        // Event.stopImmediatePropagation()
+
         document.getElementById("VRButton").click();
     }
 
     const handleExit = async () => {
-        
+        // const session = this._xr.getSession();
+        // if (session) {
+        // const session = renderer.xr.getSession();
+        // session.end();
+        // await document.getElementById("VRButton").click();
+
+        // setTimeout(() => {
+
+            
+        // },2000)
+
+        // 아하 ! 비동기이구나 !!!!
+
 
         const session = renderer.xr.getSession();
         session.end().then(()=>{

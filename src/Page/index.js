@@ -34,7 +34,7 @@
 // export * as SpatialControls from './spatialTeleport'
 // export * as R3F from './convertTor3f'
 // export * as HardAsync from './hardAsync'
-// export * as TraceLogic from './traceLogic'
+export * as TraceLogic from './traceLogic'
 
 // export * as Shader from './shader'
 
@@ -53,3 +53,5 @@ export * as DatGuiSpatial from './spatialWithDatgui'
 export * as RefactorSpatial from './refactorSpatialControls'
 
 export * as ControlsAndSpatial from './controlsAndSpatial'
+
+export * as MultiTeleport from './multiTeleport'
