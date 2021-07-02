@@ -12,6 +12,8 @@ import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.j
 
 let tmpVec = new THREE.Vector3(0,0,0);
 
+let t0 = performance.now();
+
 export default class Enemy extends Actor {
     constructor() {
         super();
@@ -19,6 +21,8 @@ export default class Enemy extends Actor {
         //
 
         Loader(this);
+
+        this.t1 = (performance.now()-t0)* Math.random();
     }
 
 
@@ -39,7 +43,9 @@ export default class Enemy extends Actor {
         tmpVec.subVectors(player.position, this.position);
         // console.log(tmpVec)
         tmpVec.normalize();
-        tmpVec.multiplyScalar(0.03)
+        let speed =  this.t1*0.00001 ;
+        console.log(speed)
+        tmpVec.multiplyScalar(speed)
         this.position.add(tmpVec)
     }
 
