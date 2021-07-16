@@ -55,3 +55,5 @@ export * as RefactorSpatial from './refactorSpatialControls'
 export * as ControlsAndSpatial from './controlsAndSpatial'
 
 export * as MultiTeleport from './multiTeleport'
+
+export * as WebRTCTest from './WebRTCTest'
