@@ -29,7 +29,7 @@ const parameters = {
     // p: 2,
     // q: 3,
     multiplyScalar: 3,
-    handsChange: ()=>{}
+    handsChange: () => { }
 };
 
 let rightHanded = true
@@ -81,7 +81,7 @@ export default function Main() {
 
         // cameraRig.position.set(0, 0, 5);
         SceneSetUp(scene);
-        updateEnvironment(scene,renderer)
+        updateEnvironment(scene, renderer)
         window.addEventListener("resize", () => resizer(camera, renderer));
 
         const controllerModelFactory = new XRControllerModelFactory();
@@ -114,7 +114,7 @@ export default function Main() {
         //     // obj.scale.set(15, 15, 15);
         //     // obj.position.set(0, 0, -1000);
         //     obj.position.set( 1, 1, 0 );
-		// 		obj.scale.set( 0.01, 0.01, 0.01 );
+        // 		obj.scale.set( 0.01, 0.01, 0.01 );
         // });
 
 
@@ -122,18 +122,18 @@ export default function Main() {
         //     // obj.scale.set(15, 15, 15);
         //     // obj.position.set(0, 0, -1000);
         //     obj.position.set( 1, 1, 0 );
-		// 		obj.scale.set( 0.01, 0.01, 0.01 );
+        // 		obj.scale.set( 0.01, 0.01, 0.01 );
         // });
 
         Loader("model/Tallskyscrapers2.glb", scene, (obj) => {
             obj.scale.multiplyScalar(1000)
-            obj.position.set(0,0,-100)
-            
+            obj.position.set(0, 0, -100)
+
         });
 
         Loader("model/Tallskyscrapers5.glb", scene, (obj) => {
             obj.scale.multiplyScalar(100)
-            obj.position.set(0,0,-10)
+            obj.position.set(0, 0, -10)
         });
 
         const loader = new THREE.FontLoader();
@@ -221,7 +221,7 @@ export default function Main() {
             spatialControls.setDistance(value);
         }
 
-        function fireHandsChange(){
+        function fireHandsChange() {
             // console.log("test")
             // spatialControls.handsInit(false);
             // rightHanded = !rightHanded

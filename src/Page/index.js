@@ -57,3 +57,5 @@ export * as ControlsAndSpatial from './controlsAndSpatial'
 export * as MultiTeleport from './multiTeleport'
 
 export * as GLBLoadTest from './glbLoadTest'
+
+export * as SpaceJump from './SpaceJumpTest'
