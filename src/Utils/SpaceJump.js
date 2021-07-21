@@ -15,9 +15,6 @@ const directionVec = new THREE.Vector3();
 
 const tmp = new THREE.Vector3();
 
-// test 필요 , 일치화 된듯 ...
-// const isOculusBrowser = /OculusBrowser/.test(navigator.userAgent);
-const isOculusBrowser = false;
 
 function TranslateHelperGeometry() {
     const geometry = new THREE.BufferGeometry();

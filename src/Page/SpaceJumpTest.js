@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 
 import * as THREE from "three";
+import CameraControls from "camera-controls";
 import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
 import { XRControllerModelFactory } from "three/examples/jsm/webxr/XRControllerModelFactory.js";
 
@@ -18,10 +19,11 @@ import * as Dat from "dat.gui";
 
 import './dat.css'
 
-
-let scene, renderer;
+const clock = new THREE.Clock();
+let scene, renderer, camera;
 let spatialControls = { update: () => { } };
 let interactiveGroup;
+let cameraControls
 
 let cameraRig;
 
@@ -53,6 +55,12 @@ export default function Main() {
 
     function Init() {
         scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            10000
+        );
 
         const color = 0x000000;
         const near = 10;
@@ -67,6 +75,14 @@ export default function Main() {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.xr.enabled = true;
         renderer.xr.setFramebufferScaleFactor(2.0);
+
+        // var geometryCube = new THREE.BoxGeometry(1, 1, 1);
+        // var materialCube = new THREE.MeshNormalMaterial();
+        // let cube = new THREE.Mesh(geometryCube, materialCube);
+        // scene.add(cube);
+        camera.position.z = 5;
+
+        cameraControls = new CameraControls(camera, renderer.domElement);
 
         vrButtonConRef.current.appendChild(VRButton.createButton(renderer));
         document.getElementById("VRButton").style.visibility = "hidden";
@@ -221,7 +237,13 @@ export default function Main() {
     function Animate() {
         spatialControls.update();
         // send();
-        if (!!xrcamera.current) renderer.render(scene, xrcamera.current);
+        // if (!!xrcamera.current) renderer.render(scene, xrcamera.current);
+
+        const delta = clock.getDelta();
+        // const hasControlsUpdated = cameraControls.update(delta);
+        cameraControls.update(delta);
+
+        renderer.render(scene, camera)
     }
 
     function windowResizer({ height, width }) { }
@@ -256,11 +278,11 @@ export default function Main() {
         // xrSettingsMesh.rotation.x = -Math.PI / 3;
         // xrSettingsMesh.rotation.y = (Math.PI) / 2;
 
-        // xrSettingsMesh.scale.setScalar(1);
+        xrSettingsMesh.scale.setScalar(8);
 
-        interactiveGroup.position.x = 0.2;
-        interactiveGroup.rotation.x = -Math.PI / 3;
-        interactiveGroup.rotation.y = (2 * Math.PI) / 3;
+        // interactiveGroup.position.x = 0.2;
+        // interactiveGroup.rotation.x = -Math.PI / 3;
+        // interactiveGroup.rotation.y = (2 * Math.PI) / 3;
 
         controller0.addEventListener(
             "connected",
