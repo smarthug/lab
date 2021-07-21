@@ -20,9 +20,8 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
-    "three": "^0.129.0",
+    "three": "^0.127.0",
     "three-mesh-bvh": "^0.3.3",
-    "three-spatial-controls": "^1.0.4",
     "tween.js": "^16.6.0",
     "web-vitals": "^1.1.0",
     "zustand": "^3.5.1"

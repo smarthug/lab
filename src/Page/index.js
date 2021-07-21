@@ -50,8 +50,10 @@ export * as InteractiveGroup from './interactiveGroup'
 
 export * as DatGuiSpatial from './spatialWithDatgui'
 
-export * as RefactorSpatial from './refactorSpatialControls'
+// export * as RefactorSpatial from './refactorSpatialControls'
 
 export * as ControlsAndSpatial from './controlsAndSpatial'
 
 export * as MultiTeleport from './multiTeleport'
+
+export * as GLBLoadTest from './glbLoadTest'
