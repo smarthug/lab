@@ -25,6 +25,10 @@ var remoteConnection = null; // RTCPeerConnection for the "remote"
 var sendChannel = null; // RTCDataChannel for the local (sender)
 var receiveChannel = null; // RTCDataChannel for the remote (receiver)
 
+const regexHash = new RegExp(/^.*\/.*\/(.*)\/([\w\d]+)$/);
+
+// let [, host = null, hash = null] = regexHash.exec(text);
+
 export default function Main() {
   const containerRef = useRef();
   const canvasRef = useRef();
