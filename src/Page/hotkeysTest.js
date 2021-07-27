@@ -19,6 +19,10 @@ import * as Dat from "dat.gui";
 
 import './dat.css'
 
+import { Button, Slider } from '@material-ui/core'
+
+import { install } from '@github/hotkey'
+
 const clock = new THREE.Clock();
 let scene, renderer, camera;
 let spatialControls = { update: () => { } };
@@ -49,6 +53,11 @@ export default function Main() {
     useLayoutEffect(() => {
         Init();
 
+
+
+        for (const el of document.querySelectorAll('[data-hotkey]')) {
+            install(el)
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -180,16 +189,7 @@ export default function Main() {
                 // exportedSend({ type: "runSeq" });
             },
             exit: () => {
-                const session = renderer.xr.getSession();
-                session.end().then(() => {
-                    interactiveGroup.dispose();
-
-                    spatialControls.dispose();
-
-                    // scene.remove(interactiveGroup)
-                    cameraRig.remove(interactiveGroup);
-                    // interactiveGroup.removeFromParent();
-                });
+                handleExit()
             },
         };
 
@@ -264,7 +264,7 @@ export default function Main() {
         // mesh.rotation.x = -Math.PI / 3;
         // mesh.rotation.y = Math.PI / 2;
 
-        const gui = new Dat.GUI({ width: 300 });
+        const gui = new Dat.GUI({ width: 300, autoPlace:false });
         gui.add(parameters, "teleportDistance", 1, 100, 1).onChange(
             setTeleportDistance
         );
@@ -381,6 +381,28 @@ export default function Main() {
         spatialControls.handsInit(!tmp);
     }
 
+    function handleSlider(e, value) {
+        console.log(value)
+    }
+
+    function handleExit() {
+
+        const session = renderer.xr.getSession();
+        session.end().then(() => {
+            interactiveGroup.dispose();
+
+            spatialControls.dispose();
+
+            // scene.remove(interactiveGroup)
+            cameraRig.remove(interactiveGroup);
+            // interactiveGroup.removeFromParent();
+        });
+    }
+
+    function handleArrowDown(){
+        console.log("Arrow down")
+    }
+
     return (
         <React.Fragment>
             <div
@@ -397,7 +419,11 @@ export default function Main() {
                         position: "absolute"
                     }}
                 >
-                    <button onClick={handleXR}>EnterXR</button>
+                    <button style={{display:"none"}} data-hotkey="Control+x" onClick={handleXR}>EnterXR</button>
+                    <button style={{display:"none"}} data-hotkey="Control+e" onClick={handleExit}>ExitXR</button>
+                    <Slider data-hotkey="s" onChange={handleSlider} />
+                    <Button data-hotkey="↓" color="primary" onClick={handleArrowDown}>ArrowDown</Button>
+                    <Button data-hotkey="↓" color="primary" onClick={handleArrowDown}>ArrowDown</Button>
                 </div>
                 <canvas ref={canvasRef} />
                 <div ref={vrButtonConRef}></div>
