@@ -399,8 +399,21 @@ export default function Main() {
         });
     }
 
+    function handleArrowUp(){
+        console.log(document.activeElement)
+        console.log("Arrow Up")
+    }
+
     function handleArrowDown(){
+        console.log(document.activeElement)
         console.log("Arrow down")
+
+        // 다른 비헤이비어를 한다 ... 
+        // element 로 인해서 ... 
+    }
+
+    function showCommandPalette(){
+        console.log("Show Command")
     }
 
     return (
@@ -421,9 +434,13 @@ export default function Main() {
                 >
                     <button style={{display:"none"}} data-hotkey="Control+x" onClick={handleXR}>EnterXR</button>
                     <button style={{display:"none"}} data-hotkey="Control+e" onClick={handleExit}>ExitXR</button>
+                    <button style={{display:"none"}} data-hotkey="Control+Shift+p" onClick={showCommandPalette}>command palette</button>
                     <Slider data-hotkey="s" onChange={handleSlider} />
-                    <Button data-hotkey="↓" color="primary" onClick={handleArrowDown}>ArrowDown</Button>
-                    <Button data-hotkey="↓" color="primary" onClick={handleArrowDown}>ArrowDown</Button>
+                    <Button data-hotkey="ArrowUp" color="primary" onClick={handleArrowUp}>ArrowUp</Button>
+                    {/* <Button data-hotkey="↓" color="primary" onClick={handleArrowDown}>ArrowDown</Button> */}
+                    {/* <Button data-hotkey="ArrowDown" color="primary" onClick={handleArrowDown}>ArrowDown</Button> */}
+                    {/* <Button data-hotkey="Backspace" color="primary" onClick={handleArrowDown}>ArrowDown</Button> */}
+                    <Button data-hotkey="Space" color="primary" onClick={handleArrowDown}>ArrowDown</Button>
                 </div>
                 <canvas ref={canvasRef} />
                 <div ref={vrButtonConRef}></div>

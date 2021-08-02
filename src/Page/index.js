@@ -61,3 +61,5 @@ export * as GLBLoadTest from './glbLoadTest'
 export * as SpaceJump from './SpaceJumpTest'
 
 export * as HotKey from './hotkeysTest'
+
+export * as WeakTest from './weakTest'
