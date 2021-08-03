@@ -1,10 +1,12 @@
 import * as THREE from "three";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import CameraControls from "camera-controls";
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 
 import { resizer, SceneSetUp } from '../Utils/utils'
+
+import { install, uninstall } from "@github/hotkey"
 
 CameraControls.install({ THREE: THREE });
 
@@ -13,32 +15,38 @@ const clock = new THREE.Clock();
 let wm = new WeakMap();
 let c = {};
 
+
+function useHotkey(element, shortcut) {
+    //install .. 
+
+    useEffect(() => {
+        // uninstall 도 해줘야할듯 ... 
+        // install uninstall 둘 만 쓴다 .... 
+    }, [])
+}
+
 export default function Main() {
+    const [num, setNum] = useState(0)
     const containerRef = useRef();
     const canvasRef = useRef();
     const vrButtonConRef = useRef();
+    const numRef = useRef();
     useEffect(() => {
         Init();
-        // Animate();
 
-        //weakmap test
-
-        
-
-        wm.set({},"t t")
-
-        let b = {}
-
-        wm.set(b, "b b")
-
-        wm.set(c, "c c")
-
-        console.log(wm)
-        // state change examine 해보기 ... 
-        // 내일 바로 할것 ... 
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+
+
+        wm.set(numRef.current, num)
+        console.log(wm)
+
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [num]);
 
     function Init() {
         scene = new THREE.Scene();
@@ -86,6 +94,11 @@ export default function Main() {
         renderer.render(scene, camera);
     }
 
+    function handleClick() {
+        const dat = num + 1;
+        setNum(dat)
+    }
+
     return (
         <div style={{
             height: "100vh",
@@ -94,6 +107,8 @@ export default function Main() {
         }}
             ref={containerRef}
         >
+            <h1 style={{ position: "absolute", color: "white" }} ref={numRef}>{num}</h1>
+            <button onClick={handleClick}>IncreaseNum</button>
             <canvas ref={canvasRef} />
             <div ref={vrButtonConRef}></div>
         </div>
