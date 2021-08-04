@@ -16,7 +16,13 @@ export function useHotkey(shortcut = null) {
     useEffect(() => {
         console.log("immutable dom???")
         // element&&install(element, "t e")
-        element && shortcut && install(element, shortcut)
+        // element && shortcut && install(element, shortcut)
+        // element && shortcut ? install(element, shortcut): install(element, shortcutMappingObj.showCommandPalette)
+        if(shortcut) {
+            element &&install(element, shortcut)
+        } else {
+            element &&install(element, shortcutMappingObj.showCommandPalette)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [element])
 
@@ -30,3 +36,9 @@ export function useHotkey(shortcut = null) {
 
     return setElement
 }
+
+
+
+export const shortcutMappingObj = {
+    showCommandPalette: "Control+P",
+};

@@ -28,7 +28,8 @@ export default function Main() {
     const numRef = useRef();
     const increaseRef = useRef();
 
-    const setElement = useHotkey("z z z");
+    // const setElement = useHotkey("z z z");
+    const setElement = useHotkey();
     useEffect(() => {
         Init();
 
