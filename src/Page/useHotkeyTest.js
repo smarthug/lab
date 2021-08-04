@@ -8,6 +8,8 @@ import { resizer, SceneSetUp } from '../Utils/utils'
 
 import { install, uninstall } from "@github/hotkey"
 
+import { useHotkey } from '../Utils/useHotkey'
+
 CameraControls.install({ THREE: THREE });
 
 let cube, scene, camera, renderer, cameraControls;
@@ -16,22 +18,7 @@ let wm = new WeakMap();
 let c = {};
 
 
-function useHotkey(element, shortcut) {
-    //install .. 
 
-    useEffect(() => {
-        // uninstall 도 해줘야할듯 ... 
-        // install uninstall 둘 만 쓴다 .... 
-
-
-        return () => {
-            uninstall(element)
-        }
-    }, [])
-
-
-    return []
-}
 
 export default function Main() {
     const [num, setNum] = useState(0)
@@ -39,10 +26,20 @@ export default function Main() {
     const canvasRef = useRef();
     const vrButtonConRef = useRef();
     const numRef = useRef();
+    const increaseRef = useRef();
+
+    const setElement = useHotkey("z z z");
     useEffect(() => {
         Init();
 
+        console.log("init")
 
+        // install(increaseRef.current, 'a a')
+        // setElement(increaseRef.current)
+
+        return () => {
+            console.log(`clean up final?`)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -50,11 +47,17 @@ export default function Main() {
 
 
         wm.set(numRef.current, num)
+        // 똑같은거 두개가 가능할까 ???
+        wm.set(numRef.current, num)
         // install(numRef.c)
         console.log(wm)
 
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        return () => {
+            console.log(`clean up ${num}`)
+        }
     }, [num]);
 
     function Init() {
@@ -118,7 +121,7 @@ export default function Main() {
             ref={containerRef}
         >
             <h1 style={{ position: "absolute", color: "white" }} ref={numRef}>{num}</h1>
-            <button onClick={handleClick}>IncreaseNum</button>
+            <button ref={setElement} onClick={handleClick}>IncreaseNum</button>
             <canvas ref={canvasRef} />
             <div ref={vrButtonConRef}></div>
         </div>

@@ -63,3 +63,5 @@ export * as SpaceJump from './SpaceJumpTest'
 export * as HotKey from './hotkeysTest'
 
 export * as WeakTest from './weakTest'
+
+export * as useHotkeyTest from './useHotkeyTest.js'
