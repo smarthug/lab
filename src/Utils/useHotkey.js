@@ -23,6 +23,11 @@ export function useHotkey(shortcut = null) {
         } else {
             element &&install(element, shortcutMappingObj.showCommandPalette)
         }
+
+
+        return (() => {
+            uninstall(element);
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [element])
 
