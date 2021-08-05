@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 export function useHotkey(shortcut = null) {
     const [element, setElement] = useState(null);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        return (() => {
-            uninstall(element);
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    //     return (() => {
+    //         uninstall(element);
+    //     })
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [])
 
     useEffect(() => {
         console.log("immutable dom???")
@@ -26,6 +26,7 @@ export function useHotkey(shortcut = null) {
 
 
         return (() => {
+            console.log("uninstall!!")
             uninstall(element);
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps

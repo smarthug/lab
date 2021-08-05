@@ -22,6 +22,7 @@ let c = {};
 
 export default function Main() {
     const [num, setNum] = useState(0)
+    const [render , setRender] = useState(true)
     const containerRef = useRef();
     const canvasRef = useRef();
     const vrButtonConRef = useRef();
@@ -29,7 +30,7 @@ export default function Main() {
     const increaseRef = useRef();
 
     // const setElement = useHotkey("z z z");
-    const setElement = useHotkey();
+    const setIncreaseNumShortcut = useHotkey("t t");
     useEffect(() => {
         Init();
 
@@ -121,8 +122,10 @@ export default function Main() {
             }}
             ref={containerRef}
         >
+            <button onClick={()=>setRender(i=>!i)}>toggle render</button>
             <h1 style={{ position: "absolute", color: "white" }} ref={numRef}>{num}</h1>
-            <button ref={setElement} onClick={handleClick}>IncreaseNum</button>
+            {render && <button ref={setIncreaseNumShortcut} onClick={handleClick}>IncreaseNum</button>}
+            
             <canvas ref={canvasRef} />
             <div ref={vrButtonConRef}></div>
         </div>
