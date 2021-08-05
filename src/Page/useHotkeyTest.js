@@ -30,7 +30,8 @@ export default function Main() {
     const increaseRef = useRef();
 
     // const setElement = useHotkey("z z z");
-    const setIncreaseNumShortcut = useHotkey("t t");
+    const setIncreaseNumShortcut = useHotkey();
+
     useEffect(() => {
         Init();
 
@@ -70,6 +71,7 @@ export default function Main() {
             0.1,
             10000
         );
+        // camera.up.set(0,0,1)
         renderer = new THREE.WebGLRenderer({
             antialias: true,
             canvas: canvasRef.current,
@@ -78,10 +80,12 @@ export default function Main() {
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.xr.setFramebufferScaleFactor(2.0);
-
+ 
         var geometry = new THREE.BoxGeometry(1, 1, 1);
         var material = new THREE.MeshNormalMaterial();
         cube = new THREE.Mesh(geometry, material);
+        cube.position.set(0,-1,0)
+        console.log(cube)
         scene.add(cube);
         camera.position.z = 5;
 
