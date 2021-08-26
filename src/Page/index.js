@@ -57,3 +57,5 @@ export * as ControlsAndSpatial from './controlsAndSpatial'
 export * as MultiTeleport from './multiTeleport'
 
 export * as WebRTCTest from './WebRTCTest'
+
+export * as PromptInXR from './promptInXR'
